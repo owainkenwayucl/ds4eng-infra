@@ -17,6 +17,7 @@ yum_repos:
   
 packages:
   - screen
+  - tmux
   - nano
   - vim
   - bind-utils
