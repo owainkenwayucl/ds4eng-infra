@@ -16,6 +16,14 @@ runcmd:
     - --now
     - qemu-guest-agent.service
 
+yum_repos:
+  docker-ce-stable:
+    name: Docker CE Stable - $basearch
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    enabled: true 
+    gpgcheck: true
+    gpgkey: https://download.docker.com/linux/centos/gpg
+  
 packages:
   - screen
   - nano
@@ -27,16 +35,6 @@ packages:
   - python3-pip
   - python3-virtualenv
   - python3-devel
-
-yum_repos:
-  docker-ce-stable:
-    name: Docker CE Stable - $basearch
-    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
-    enabled: true 
-    gpgcheck: true
-    gpgkey: https://download.docker.com/linux/centos/gpg
-  
-packages:
   - docker-ce 
   - docker-ce-cli 
   - containerd.io 
