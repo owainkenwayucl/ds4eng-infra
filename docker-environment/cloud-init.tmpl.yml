@@ -1,4 +1,5 @@
 #cloud-config
+package_reboot_if_required: true
 package_update: true
 package_upgrade: true
 
@@ -33,6 +34,7 @@ packages:
 
 runcmd:
   - [ systemctl, enable, --now, docker ]
+  - [ usermod, -a, -G, docker, almalinux ]
 
 ssh_authorized_keys:
   - ${public_key_openssh}
