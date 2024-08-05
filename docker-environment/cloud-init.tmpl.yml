@@ -1,12 +1,53 @@
 #cloud-config
+package_update: true
+package_upgrade: true
+
+runcmd:
+  - - /usr/bin/crb
+    - enable
+
 packages:
   - qemu-guest-agent
+  - epel-release
 
 runcmd:
   - - systemctl
     - enable
     - --now
     - qemu-guest-agent.service
+
+packages:
+  - screen
+  - nano
+  - vim
+  - bind-utils
+  - net-tools
+  - git
+  - htop
+  - python3-pip
+  - python3-virtualenv
+  - python3-devel
+
+yum_repos:
+  docker-ce-stable:
+    name: Docker CE Stable - $basearch
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    enabled: true 
+    gpgcheck: true
+    gpgkey: https://download.docker.com/linux/centos/gpg
+  
+packages:
+  - docker-ce 
+  - docker-ce-cli 
+  - containerd.io 
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+runcmd:
+  - - systemctl
+    - enable
+    - --now
+    - docker
 
 ssh_authorized_keys:
   - ${public_key_openssh}
