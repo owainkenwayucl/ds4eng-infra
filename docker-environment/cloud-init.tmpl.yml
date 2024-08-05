@@ -3,8 +3,8 @@ package_update: true
 package_upgrade: true
 
 bootcmd:
-  - [ /usr/bin/crb, enable ]
-  - [ dnf, install, epel-release]
+  - [ dnf, config-manager, --set-enabled, crb ]
+  - [ dnf, install, -y, epel-release ]
 
 yum_repos:
   docker-ce-stable:
