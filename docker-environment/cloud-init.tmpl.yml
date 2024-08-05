@@ -3,18 +3,13 @@ package_update: true
 package_upgrade: true
 
 runcmd:
-  - - /usr/bin/crb
-    - enable
+  - [ /usr/bin/crb, enable ]
 
 packages:
-  - qemu-guest-agent
   - epel-release
 
 runcmd:
-  - - systemctl
-    - enable
-    - --now
-    - qemu-guest-agent.service
+  - [ systemctl, enable, --now, qemu-guest-agent.service ]
 
 yum_repos:
   docker-ce-stable:
