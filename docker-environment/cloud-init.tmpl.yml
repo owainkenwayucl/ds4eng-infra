@@ -27,11 +27,13 @@ packages:
   - python3-pip
   - python3-virtualenv
   - python3-devel
+  - ansible
   - docker-ce 
   - docker-ce-cli 
   - containerd.io 
   - docker-buildx-plugin
   - docker-compose-plugin
+
 
 runcmd:
   - [ systemctl, enable, --now, docker ]

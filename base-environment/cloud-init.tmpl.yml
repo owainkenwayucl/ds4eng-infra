@@ -20,6 +20,7 @@ packages:
   - python3-virtualenv
   - python3-devel
   - podman
+  - ansible
 
 ssh_authorized_keys:
   - ${public_key_openssh}
