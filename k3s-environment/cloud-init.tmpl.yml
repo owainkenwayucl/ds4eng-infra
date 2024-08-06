@@ -58,6 +58,6 @@ runcmd:
   - [ /usr/local/bin/helm, repo, add, jupyterhub, https://hub.jupyter.org/helm-chart/ ]
   - [ /usr/local/bin/helm, repo, update ]
   - [ chgrp, docker, /etc/rancher/k3s/k3s.yaml ]
-  - [ chmod, 0640, /etc/rancher/k3s/k3s.yaml ] 
+  - [ chmod, 640, /etc/rancher/k3s/k3s.yaml ] 
 ssh_authorized_keys:
   - ${public_key_openssh}
