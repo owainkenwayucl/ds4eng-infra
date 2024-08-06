@@ -51,11 +51,13 @@ runcmd:
   - [ usermod, -a, -G, docker, almalinux ]
   - [ curl, -o, /root/install_k3s.sh, https://get.k3s.io ]
   - [ bash, /root/install_k3s.sh ]
+  - [ systemctl, enable, --now, k3s ]
   - [ curl, -o, /root/install_helm.sh, https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 ]
   - [ bash, /root/install_helm.sh ]
   - [ /usr/local/bin/helm, repo, add, bitnami, https://charts.bitnami.com/bitnami ]
   - [ /usr/local/bin/helm, repo, add, jupyterhub, https://hub.jupyter.org/helm-chart/ ]
   - [ /usr/local/bin/helm, repo, update ]
-  
+  - [ chgrp, docker, /etc/rancher/k3s/k3s.yaml ]
+  - [ chmod, 0640, /etc/rancher/k3s/k3s.yaml ] 
 ssh_authorized_keys:
   - ${public_key_openssh}
