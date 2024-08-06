@@ -1,0 +1,61 @@
+#cloud-config
+package_reboot_if_required: true
+package_update: true
+package_upgrade: true
+
+bootcmd:
+  - [ dnf, config-manager, --set-enabled, crb ]
+  - [ dnf, install, -y, epel-release ]
+
+yum_repos:
+  docker-ce-stable:
+    name: Docker CE Stable - $basearch
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    enabled: true 
+    gpgcheck: true
+    gpgkey: https://download.docker.com/linux/centos/gpg
+  
+packages:
+  - screen
+  - tmux
+  - nano
+  - vim
+  - bind-utils
+  - net-tools
+  - git
+  - htop
+  - wget
+  - python3-pip
+  - python3-virtualenv
+  - python3-devel
+  - ansible
+  - docker-ce 
+  - docker-ce-cli 
+  - containerd.io 
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+write_files:
+  - path: /etc/profile.d/usrlocal.sh
+    permissions: "0755"
+    content: |
+      export PATH=/usr/local/bin:$PATH
+  - path: /etc/profile.d/kubeconf.sh
+    permissions: "0755"
+    content: |
+      export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+
+runcmd:
+  - [ systemctl, stop, --now, nm-cloud-setup.service, nm-cloud-setup.timer ]
+  - [ systemctl, enable, --now, docker ]
+  - [ usermod, -a, -G, docker, almalinux ]
+  - [ curl, -o, /root/install_k3s.sh, https://get.k3s.io ]
+  - [ bash, /root/install_k3s.sh ]
+  - [ curl, -o, /root/install_helm.sh, https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 ]
+  - [ bash, /root/install_helm.sh ]
+  - [ /usr/local/bin/helm, repo, add, bitnami, https://charts.bitnami.com/bitnami ]
+  - [ /usr/local/bin/helm, repo, add, jupyterhub, https://hub.jupyter.org/helm-chart/ ]
+  - [ /usr/local/bin/helm, repo, update ]
+  
+ssh_authorized_keys:
+  - ${public_key_openssh}
