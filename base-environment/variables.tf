@@ -5,12 +5,12 @@ variable img_display_name {
 
 variable namespace {
   type = string
-  default = ""
+  default = "ds4eng-ns"
 }
 
 variable network_name {
   type = string
-  default = ""
+  default = "ds4eng-ns/ds4eng"
 }
 
 variable username {
