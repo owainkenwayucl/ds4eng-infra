@@ -25,7 +25,7 @@ resource "harvester_virtualmachine" "vm" {
   
   count = var.vm_count
 
-  name                 = "${var.prefix}${format("%02d", count.index + 1)}"
+  name                 = "${var.username}-base-${format("%02d", count.index + 1)}"
   namespace            = var.namespace
   restart_after_update = true
 
