@@ -1,0 +1,16 @@
+- name: Set up K3S
+  hosts: workers
+  vars:
+    nodetoken: "{{ lookup('file', 'node-token') }}"
+  become: true
+  become_user: root
+  tasks:
+  - name: Add /usr/local/bin to $PATH 😱
+    copy:
+      content: "export PATH=/usr/local/bin:$PATH"
+      dest: "/etc/profile.d/usrlocal.sh"
+  - name: Download and install K3s 😣
+    shell: "curl -sfL https://get.k3s.io | bash -"
+    environment:
+      K3S_URL: "https://{{ groups['headnode'][0] }}:6443"
+      K3S_TOKEN: "{{ nodetoken }}"
