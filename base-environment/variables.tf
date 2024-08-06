@@ -13,15 +13,11 @@ variable network_name {
   default = ""
 }
 
-variable prefix {
+variable username {
   type = string
   default = ""
 }
 
-variable public_key {
-  type = string
-  default = ""
-}
 
 variable vm_count {
   type    = number

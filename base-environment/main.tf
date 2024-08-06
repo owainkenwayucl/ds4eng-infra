@@ -4,7 +4,7 @@ data "harvester_image" "img" {
 }
 
 data "harvester_ssh_key" "mysshkey" {
-  name      = var.public_key
+  name      = var.username
   namespace = var.namespace
 }
 
@@ -38,7 +38,7 @@ resource "harvester_virtualmachine" "vm" {
   secure_boot = true
 
   run_strategy    = "RerunOnFailure"
-  hostname        = "${var.prefix}${format("%02d", count.index + 1)}"
+  hostname        = "${var.username}-base-${format("%02d", count.index + 1)}"
   reserved_memory = "100Mi"
   machine_type    = "q35"
 
