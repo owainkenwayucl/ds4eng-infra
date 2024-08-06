@@ -34,6 +34,7 @@ packages:
   - containerd.io 
   - docker-buildx-plugin
   - docker-compose-plugin
+  - glibc-langpack-en
 
 write_files:
   - path: /etc/profile.d/usrlocal.sh
@@ -45,7 +46,9 @@ write_files:
     content: |
       export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
+
 runcmd:
+  - [ localectl, set-locale, en_GB.UTF-8 ]
   - [ systemctl, stop, --now, nm-cloud-setup.service, nm-cloud-setup.timer ]
   - [ systemctl, enable, --now, docker ]
   - [ usermod, -a, -G, docker, almalinux ]

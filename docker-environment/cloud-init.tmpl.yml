@@ -24,6 +24,7 @@ packages:
   - net-tools
   - git
   - htop
+  - wget
   - python3-pip
   - python3-virtualenv
   - python3-devel
@@ -33,9 +34,10 @@ packages:
   - containerd.io 
   - docker-buildx-plugin
   - docker-compose-plugin
-
+  - glibc-langpack-en
 
 runcmd:
+  - [ localectl, set-locale, en_GB.UTF-8 ]
   - [ systemctl, enable, --now, docker ]
   - [ usermod, -a, -G, docker, almalinux ]
 
