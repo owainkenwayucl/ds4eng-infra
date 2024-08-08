@@ -1,27 +1,9 @@
 #cloud-config
-package_reboot_if_required: true
-package_update: true
-package_upgrade: true
-
 bootcmd:
   - [ dnf, config-manager, --set-enabled, crb ]
   - [ dnf, install, -y, epel-release ]
 
 packages:
-  - screen
-  - tmux
-  - nano
-  - vim
-  - bind-utils
-  - net-tools
-  - git
-  - htop
-  - wget
-  - python3-pip
-  - python3-virtualenv
-  - python3-devel
-  - podman
-  - ansible
   - glibc-langpack-en
 
 runcmd:
