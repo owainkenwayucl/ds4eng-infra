@@ -2,6 +2,7 @@
 
 import json
 import subprocess
+import argparse
 
 def run(command):
     return subprocess.run(command, capture_output=True, encoding='UTF-8')
@@ -11,35 +12,54 @@ def generate_inventory():
     ip_data = json.loads(run(command).stdout)
     head_node = ip_data.pop()
 
-    headnodes = {}
-    headnodes_hosts = {}
-    headnodes_hosts[head_node] = None
-    headnodes["hosts"] = headnodes_hosts
-    print(f"Head node: {head_node}")
+    host_vars = {}
+    host_vars[head_node] = { "ip": [head_node] }
 
-    workers = {}
-    workers_hosts = {}
+    counter = 0
+    workers = []
+
     for a in ip_data:
-        workers_hosts[f"{a}"] = None
-        print(f"Worker node: {a}")
+        name = a
+        host_vars[name] = { "ip": [a] }
+        workers.append(name)
+        counter += 1
 
-    workers["hosts"] = workers_hosts
+    _meta = {}
+    _meta["hostvars"] = host_vars
+    _all = { "children": ["headnode","workers"] }
 
-    children = {}
-    children["headnode"] = headnodes
-    children["workers"] = workers
-    al = {}
-    al["children"] = children
+    _headnode = { "hosts" : [head_node] }
+    _workers = { "hosts": workers }
 
-    inv = {}
-    inv["all"] = al
-    jd = json.dumps(inv, indent=4)
+    _jd = {}
+    _jd["_meta"] = _meta
+    _jd["all"] = _all
+    _jd["workers"] = _workers
+    _jd["headnode"] = _headnode
 
-    print(jd)
-    inv_file = open("inventory.json", "w")
-    inv_file.write(jd)
-    inv_file.close()
+    jd = json.dumps(_jd, indent=4)
+    return jd
 
 
 if __name__ == "__main__":
-    generate_inventory()
+
+    ap = argparse.ArgumentParser(
+        description = "Generate a K3s cluster inventory from Terraform.",
+        prog = __file__
+    )
+
+    mo = ap.add_mutually_exclusive_group()
+    mo.add_argument("--list",action="store", nargs="*", default="dummy", help="Show JSON of all managed hosts")
+    mo.add_argument("--host",action="store", help="Display vars related to the host")
+
+    args = ap.parse_args()
+
+    if args.host:
+        print(json.dumps({}))
+    elif len(args.list) >= 0:
+        jd = generate_inventory()
+        print(jd)
+    else:
+        raise ValueError("Expecting either --host $HOSTNAME or --list")
+
+    
