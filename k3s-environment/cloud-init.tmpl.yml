@@ -1,8 +1,4 @@
 #cloud-config
-package_reboot_if_required: true
-package_update: true
-package_upgrade: true
-
 bootcmd:
   - [ dnf, config-manager, --set-enabled, crb ]
   - [ dnf, install, -y, epel-release ]
@@ -16,30 +12,10 @@ yum_repos:
     gpgkey: https://download.docker.com/linux/centos/gpg
   
 packages:
-  - screen
-  - tmux
-  - nano
-  - vim
-  - bind-utils
-  - net-tools
-  - git
-  - htop
-  - wget
-  - python3-pip
-  - python3-virtualenv
-  - python3-devel
-  - ansible
-  - docker-ce 
-  - docker-ce-cli 
-  - containerd.io 
-  - docker-buildx-plugin
-  - docker-compose-plugin
   - glibc-langpack-en
 
 runcmd:
   - [ localectl, set-locale, en_GB.UTF-8 ]
-  - [ systemctl, enable, --now, docker ]
-  - [ usermod, -a, -G, docker, almalinux ]
 
 ssh_authorized_keys:
   - ${public_key_openssh}
