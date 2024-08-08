@@ -2,11 +2,13 @@
 
 Generally:
 
-Have a key named after your user name, set user name in `variables.tf` and `terraform init`,  `terraform apply` and everything should just work.
+Have a key named after your user name, set user name in `variables.tf` and everything should just work.
 
-On the K3s stuff, set the number of servers (>= 2) in `variables.tf`, after doing `terraform apply` do:
+To build an environment, set the number of servers (>= 2 for clusters!) in `variables.tf`, after doing `terraform apply` do:
 
 ```
+terraform init
+terraform apply
 ansible-playbook -i ./generate_inventory.py full.yaml
 ```
 
