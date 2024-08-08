@@ -13,5 +13,3 @@ ansible-playbook -i ./generate_inventory.py full.yaml
 ```
 
 (or individual playbooks)
-
-Log into the head node and you should have `kubectl`, `helm` etc.
