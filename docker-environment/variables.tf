@@ -1,6 +1,6 @@
 variable img_display_name {
   type = string
-  default = "almalinux-9.4-20240507"
+  default = "almalinux-9.4-20240805"
 }
 
 variable namespace {
@@ -15,7 +15,7 @@ variable network_name {
 
 variable username {
   type = string
-  default = ""
+#  default = ""
 }
 
 

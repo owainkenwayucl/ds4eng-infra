@@ -1,5 +1,5 @@
 - name: Install Kubernetes tools
   hosts: all
   tasks:
-  - name: Install Kubectl and Krew
-    shell: "brew install kubectl krew"
+  - name: Install Kubectl, Krew, Helm
+    shell: "brew install kubectl krew helm"
