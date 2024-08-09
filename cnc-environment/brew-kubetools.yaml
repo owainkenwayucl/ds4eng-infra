@@ -1,5 +1,5 @@
-- name: Set Linuxbrew
+- name: Install Kubernetes tools
   hosts: all
   tasks:
-  - name: Download and install LinuxBrew 🐧🍻
+  - name: Install Kubectl and Krew
     shell: "brew install kubectl krew"
