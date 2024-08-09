@@ -13,6 +13,8 @@
       state: present
       name: "hashicorp-stable"
       description: "Hashicorp Stable Repo"
+      gpgcheck: true
+      gpgcakey: https://rpm.releases.hashicorp.com/gpg
   - name: Terraform + Vault
     ansible.builtin.dnf:
       name:
