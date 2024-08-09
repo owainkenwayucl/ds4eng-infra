@@ -3,12 +3,5 @@ bootcmd:
   - [ dnf, config-manager, --set-enabled, crb ]
   - [ dnf, install, -y, epel-release ]
 
-packages:
-  - glibc-langpack-en
-
-runcmd:
-  - [ localectl, set-locale, en_GB.UTF-8 ]
-  - [ timedatectl, set-timezone, Europe/London ]
-  
 ssh_authorized_keys:
   - ${public_key_openssh}
