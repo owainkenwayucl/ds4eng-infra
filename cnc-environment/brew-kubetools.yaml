@@ -1,0 +1,5 @@
+- name: Set Linuxbrew
+  hosts: all
+  tasks:
+  - name: Download and install LinuxBrew 🐧🍻
+    shell: "brew install kubectl krew"
