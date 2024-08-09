@@ -11,7 +11,7 @@
     ansible.builtin.yum_repository:
       baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable"
       state: present
-      name: "Hashicorp Stable - $basearch
+      name: "Hashicorp Stable - $basearch"
       description: "Hashicorp stable repo"
   - name: Terraform + Vault
     ansible.builtin.dnf:
