@@ -1,0 +1,20 @@
+- name: Set up Terraform
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+  - name: Hashicorp key
+    rpm_key:
+      state: present
+      key: "https://rpm.releases.hashicorp.com/gpg"
+  - name: Hashicorp Repo
+    ansible.builtin.yum_repository:
+      baseurl: "https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable"
+      state: present
+      name: "Hashicorp Stable - $basearch
+      description: "Hashicorp stable repo"
+  - name: Terraform + Vault
+    ansible.builtin.dnf:
+      name:
+        - terraform
+        - vault
