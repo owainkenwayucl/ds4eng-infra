@@ -3,7 +3,7 @@
 - import_playbook: update.yaml
 - import_playbook: reboot.yaml
 - import_playbook: customisations.yaml
-- import_playbook: hostnamelogin.yaml
+- import_playbook: hostnameloginnode.yaml
 - import_playbook: hostnamemgmt.yaml
 - import_playbook: hostnameworkers.yaml
 - import_playbook: nfs-server.yaml
