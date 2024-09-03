@@ -42,19 +42,3 @@
       block: "{{ lookup('template', 'files/hostfile.j2') }}"
       dest:  /etc/hosts
       insertafter: "EOF"
-  - name: Set hostname (loginode)
-    ansible.builtin.hostname:
-      name: loginnode
-      use: systemd
-    delegate_to: "{{ groups['loginnode'][0] }}"
-  - name: Set hostname (mgmtnode)
-    ansible.builtin.hostname:
-      name: mgmtnode
-      use: systemd
-    delegate_to: "{{ groups['mgmtnode'][0] }}"
-  - name: Set hostname (workers)
-    ansible.builtin.hostname:
-      name: workernode{{lookup('ansible.utils.index_of', groups["workers"], 'eq', inventory_hostname) + 1 }}
-      use: systemd
-    delegate_to: "{{ item }}"
-    loop: "{{ groups['workers'] }}"
