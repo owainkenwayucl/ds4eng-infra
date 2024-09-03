@@ -3,10 +3,6 @@
   become: true
   become_user: root
   tasks:
-  - name: Update packages
-    ansible.builtin.dnf:
-      name: "*"
-      state: latest
   - name: Kernel source
     ansible.builtin.dnf:
       name: "kernel-devel"
@@ -19,27 +15,13 @@
       gpgcheck: true
       name: "BeeGFS"
       description: "BeeGFS repo"
-  - name: Install storage daemons
+  - name: Install BeeGFs packages
     ansible.builtin.dnf:
-      name: "beegfs-storage"
-      state: latest
-  - name: Install client tools
-    ansible.builtin.dnf:
-      name: "beegfs-client"
-      state: latest
-  - name: Install utilities
-    ansible.builtin.dnf:
-      name: "beegfs-utils"
-      state: latest
-  - name: Install helperd
-    ansible.builtin.dnf:
-      name: "beegfs-helperd"
-      state: latest
-  - name: Install management service
-    ansible.builtin.dnf:
-      name: "beegfs-mgmtd"
-      state: latest
-  - name: Install metadata service 
-    ansible.builtin.dnf:
-      name: "beegfs-meta"
+      name: 
+      - "beegfs-storage"
+      - "beegfs-client"
+      - "beegfs-utils"
+      - "beegfs-helperd"
+      - "beegfs-mgmtd"
+      - "beegfs-meta"
       state: latest
