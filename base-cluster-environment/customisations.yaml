@@ -1,9 +1,9 @@
-- name: Update packages and install minimum requirements.
+- name: Customise VMs for course
   hosts: all
   become: true
   become_user: root
   tasks: 
-  - name: Install quality of life tools
+  - name: Install quality of life tools, compilers, python3, slurm
     ansible.builtin.dnf:
       name:
         - glibc-langpack-en
@@ -42,3 +42,18 @@
       block: "{{ lookup('template', 'files/hostfile.j2') }}"
       dest:  /etc/hosts
       insertafter: "EOF"
+  - name: Set hostname (loginode)
+    ansible.builtin.hostname:
+      name: loginnode
+      use: systemd
+    delegate_to: loginnode
+  - name: Set hostname (mgmtnode)
+    ansible.builtin.hostname:
+      name: mgmtnode
+      use: systemd
+    delegate_to: mgmtnode
+  - name: Set hostname (workers)
+    ansible.builtin.hostname:
+      name: workernode{{lookup('ansible.utils.index_of', groups["workers"], 'eq', inventory_hostname) + 1 }}
+      use: systemd
+    delegate_to: workers

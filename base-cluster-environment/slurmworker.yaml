@@ -3,10 +3,6 @@
   become: true
   become_user: root
   tasks: 
-  - name: Set hostname
-    ansible.builtin.hostname:
-      name: workernode{{lookup('ansible.utils.index_of', groups["workers"], 'eq', inventory_hostname) + 1 }}
-      use: systemd
   - name: Delete default slurm config
     ansible.builtin.file:
       path: /etc/slurm/slurm.conf
