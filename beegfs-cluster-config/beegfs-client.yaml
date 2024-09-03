@@ -1,0 +1,45 @@
+- name: BeegGFS Common Configuration
+  hosts: workers:loginnode
+  become: true
+  become_user: root
+  tasks:
+  - name: Create mount location
+    ansible.builtin.file:
+      path: /beegfs
+      state: directory
+  - name: Configure client
+    ansible.builtin.command:
+      cmd: /opt/beegfs/sbin/beegfs-setup-client -m mgmtnode
+  - name: Auth file
+    ansible.builtin.copy:
+      src: ./.generated/connauthfile
+      dest: /etc/beegfs/connauthfile
+      owner: root
+      group: root
+      mode: 400
+  - name: Mounts file
+    ansible.builtin.copy:
+      src: files/beegfs-mounts.conf
+      dest: /etc/beegfs/beegfs-mounts.conf
+      owner: root
+      group: root
+  - name: fix helperconf
+    ansible.builtin.replace:
+      path: /etc/beegfs/beegfs-helperd.conf
+      regexp: 'connAuthFile[ \t]+='
+      replace: 'connAuthFile=/etc/beegfs/connauthfile'
+  - name: fix client conf
+    ansible.builtin.replace:
+      path: /etc/beegfs/beegfs-client.conf
+      regexp: 'connAuthFile[ \t]+='
+      replace: 'connAuthFile=/etc/beegfs/connauthfile'
+  - name: start helperd
+    ansible.builtin.systemd_service:
+      name: beegfs-helperd
+      state: started
+      enabled: true
+  - name: start client
+    ansible.builtin.systemd_service:
+      name: beegfs-client
+      state: started
+      enabled: true

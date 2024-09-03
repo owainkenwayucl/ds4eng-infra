@@ -1,0 +1,45 @@
+- name: BeeGFS packages
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+  - name: Update packages
+    ansible.builtin.dnf:
+      name: "*"
+      state: latest
+  - name: Kernel source
+    ansible.builtin.dnf:
+      name: "kernel-devel"
+      state: latest
+  - name: BeeGFS Repo
+    ansible.builtin.yum_repository:
+      baseurl: "https://www.beegfs.io/release/beegfs_7.4.4/dists/rhel9"
+      state: present
+      gpgkey: "https://www.beegfs.io/release/beegfs_7.4.4/gpg/GPG-KEY-beegfs"
+      gpgcheck: true
+      name: "BeeGFS"
+      description: "BeeGFS repo"
+  - name: Install storage daemons
+    ansible.builtin.dnf:
+      name: "beegfs-storage"
+      state: latest
+  - name: Install client tools
+    ansible.builtin.dnf:
+      name: "beegfs-client"
+      state: latest
+  - name: Install utilities
+    ansible.builtin.dnf:
+      name: "beegfs-utils"
+      state: latest
+  - name: Install helperd
+    ansible.builtin.dnf:
+      name: "beegfs-helperd"
+      state: latest
+  - name: Install management service
+    ansible.builtin.dnf:
+      name: "beegfs-mgmtd"
+      state: latest
+  - name: Install metadata service 
+    ansible.builtin.dnf:
+      name: "beegfs-meta"
+      state: latest
