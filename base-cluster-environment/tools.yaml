@@ -37,3 +37,8 @@
     shell: "localectl set-locale en_GB.UTF-8"
   - name: Set time-zone
     shell: "timedatectl set-timezone Europe/London"
+  - name: Create hosts file
+    ansible.builtin.blockinfile:
+      block: "{{ lookup('template', 'files/hostfile.j2') }}"
+      dest:  /etc/hosts
+      insertafter: "EOF"

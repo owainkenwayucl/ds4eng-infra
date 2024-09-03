@@ -5,7 +5,6 @@
 - import_playbook: tools.yaml
 - import_playbook: nfs-server.yaml
 - import_playbook: nfs-client.yaml
-- import_playbook: hostfile.yaml
 - import_playbook: commonkeys.yaml
 - import_playbook: sharecommonkeys.yaml
 - import_playbook: mungekey.yaml
