@@ -1,0 +1,10 @@
+- name: Set up hostfile
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+  - name: Create exports file
+    ansible.builtin.blockinfile:
+      block: "{{ lookup('template', 'files/hostfile.j2') }}"
+      dest:  /etc/hosts
+      insertafter: "EOF"

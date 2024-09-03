@@ -1,0 +1,17 @@
+---
+
+- import_playbook: update.yaml
+- import_playbook: local.yaml
+- import_playbook: reboot.yaml
+- import_playbook: tools.yaml
+- import_playbook: nfs-server.yaml
+- import_playbook: nfs-client.yaml
+- import_playbook: hostfile.yaml
+- import_playbook: commonkeys.yaml
+- import_playbook: sharecommonkeys.yaml
+- import_playbook: mungekey.yaml
+- import_playbook: sharemungekeys.yaml
+- import_playbook: slurmctl.yaml
+- import_playbook: slurmworker.yaml
+- import_playbook: slurmlogin.yaml
+- import_playbook: userfiles.yaml

@@ -1,0 +1,46 @@
+- name: Update packages and install minimum requirements.
+  hosts: all
+  become: true
+  become_user: root
+  tasks: 
+  - name: Install quality of life tools
+    ansible.builtin.dnf:
+      name:
+        - vim
+        - emacs
+        - nano
+        - screen
+        - tmux
+        - net-tools
+        - bind-utils
+        - htop
+        - git
+        - ansible
+      state: latest
+  - name: Install Python 3
+    ansible.builtin.dnf:
+      name:
+        - python3-devel
+        - python3-pip
+        - python3-virtualenv
+      state: latest
+  - name: Install compilers
+    ansible.builtin.dnf:
+      name:
+      - g++
+      - gfortran
+      - openmpi-devel
+      - openmpi
+      - patch
+      - bzip2
+      - python3-mpi4py-openmpi
+      - make
+      state: latest
+  - name: Install Slurm
+    ansible.builtin.dnf:
+      name:
+      - slurm
+      - slurm-slurmd
+      - slurm-slurmctld
+      - munge
+      state: latest
