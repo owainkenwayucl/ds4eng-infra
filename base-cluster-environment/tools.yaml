@@ -6,6 +6,7 @@
   - name: Install quality of life tools
     ansible.builtin.dnf:
       name:
+        - glibc-langpack-en
         - vim
         - emacs
         - nano
@@ -15,32 +16,24 @@
         - bind-utils
         - htop
         - git
-        - ansible
-      state: latest
-  - name: Install Python 3
-    ansible.builtin.dnf:
-      name:
         - python3-devel
         - python3-pip
         - python3-virtualenv
+        - g++
+        - gfortran
+        - openmpi-devel
+        - openmpi
+        - patch
+        - bzip2
+        - python3-mpi4py-openmpi
+        - make
+        - slurm
+        - slurm-slurmd
+        - slurm-slurmctld
+        - munge
+        - nfs-utils
       state: latest
-  - name: Install compilers
-    ansible.builtin.dnf:
-      name:
-      - g++
-      - gfortran
-      - openmpi-devel
-      - openmpi
-      - patch
-      - bzip2
-      - python3-mpi4py-openmpi
-      - make
-      state: latest
-  - name: Install Slurm
-    ansible.builtin.dnf:
-      name:
-      - slurm
-      - slurm-slurmd
-      - slurm-slurmctld
-      - munge
-      state: latest
+  - name: Set en-GB localization
+    shell: "localectl set-locale en_GB.UTF-8"
+  - name: Set time-zone
+    shell: "timedatectl set-timezone Europe/London"
