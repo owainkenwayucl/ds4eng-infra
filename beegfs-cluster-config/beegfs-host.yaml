@@ -3,6 +3,8 @@
   become: true
   become_user: root
   tasks:
+  - name: Create temp directory
+    local_action: ansible.builtin.command mkdir -p ./.generated
   - name: Generate connauthfile
     local_action: ansible.builtin.command dd if=/dev/random of=./.generated/connauthfile bs=128 count=1
   - name: Create management location
