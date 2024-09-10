@@ -24,7 +24,7 @@ resource "harvester_virtualmachine" "loginvm" {
   
   count = 1
 
-  name                 = "${var.username}-login-${format("%02d", count.index + 1)}"
+  name                 = "${var.username}-login-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   namespace            = var.namespace
   restart_after_update = true
 
@@ -37,7 +37,7 @@ resource "harvester_virtualmachine" "loginvm" {
   secure_boot = false
 
   run_strategy    = "RerunOnFailure"
-  hostname        = "${var.username}-login-${format("%02d", count.index + 1)}"
+  hostname        = "${var.username}-login-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   reserved_memory = "100Mi"
   machine_type    = "q35"
 
@@ -68,7 +68,7 @@ resource "harvester_virtualmachine" "mgmtvm" {
   
   count = 1
 
-  name                 = "${var.username}-mgmt-${format("%02d", count.index + 1)}"
+  name                 = "${var.username}-mgmt-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   namespace            = var.namespace
   restart_after_update = true
 
@@ -81,7 +81,7 @@ resource "harvester_virtualmachine" "mgmtvm" {
   secure_boot = false
 
   run_strategy    = "RerunOnFailure"
-  hostname        = "${var.username}-mgmt-${format("%02d", count.index + 1)}"
+  hostname        = "${var.username}-mgmt-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   reserved_memory = "100Mi"
   machine_type    = "q35"
 
@@ -112,7 +112,7 @@ resource "harvester_virtualmachine" "workervm" {
   
   count = var.vm_count
 
-  name                 = "${var.username}-worker-${format("%02d", count.index + 1)}"
+  name                 = "${var.username}-worker-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   namespace            = var.namespace
   restart_after_update = true
 
@@ -125,7 +125,7 @@ resource "harvester_virtualmachine" "workervm" {
   secure_boot = false
 
   run_strategy    = "RerunOnFailure"
-  hostname        = "${var.username}-worker-${format("%02d", count.index + 1)}"
+  hostname        = "${var.username}-worker-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   reserved_memory = "100Mi"
   machine_type    = "q35"
 
