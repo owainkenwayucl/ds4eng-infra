@@ -32,7 +32,7 @@ resource "harvester_virtualmachine" "vm" {
   description = "Docker VM"
 
   cpu    = 2
-  memory = "16Gi"
+  memory = "8Gi"
 
   efi         = true
   secure_boot = true
