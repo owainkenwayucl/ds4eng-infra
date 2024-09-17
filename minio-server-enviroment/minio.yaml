@@ -15,7 +15,7 @@
       state: present
       name: minio-user
   - name: Create certificate
-    ansible.shell.builtin: "openssl req -x509 -newkey rsa:4096 -keyout /root/minio.key -out /root/minio.crt -sha256 -days 3650 -nodes -subj '/CN={{inventory_hostname}}' -addext 'subjectAltName = IP:{{inventory_hostname}}'"
+    ansible.shell.builtin: "openssl req -x509 -newkey rsa:4096 -keyout /root/minio.key -out /root/minio.crt -sha256 -days 3650 -nodes -subj '/CN\={{inventory_hostname}}' -addext 'subjectAltName \= IP:{{inventory_hostname}}'"
   - name: Create minio settings directory
     ansible.builtin.file:
       name: "/home/minio-user/.minio"
