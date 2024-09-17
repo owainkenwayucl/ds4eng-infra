@@ -1,6 +1,7 @@
 - name: Set up minio
   become: true
   become_user: root
+  host: all
   tasks: 
   - name: Create minio group
     ansible.builtin.group:
