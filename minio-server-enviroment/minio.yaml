@@ -14,6 +14,68 @@
       password: "!"
       state: present
       name: minio-user
+  - name: Create certificate request
+    community.crypto.openssl_csr_pipe:
+      privatekey_path: /root/minio.key
+      common_name: "{{ inventory_hostname }}"
+      organization_name: "UCL"
+      subject_alt_name:
+       - "IP:{{ inventory_hostname }}"
+      register: csr
+  - name: Create certificate
+    community.crypto.x509_certificate:
+      path: /root/minio.crt
+      csr_content: "{{ csr.csr }}"
+      privatekey_path: /root/minio.key
+      provider: selfsigned
+  - name: Create minio settings directory
+    ansible.builtin.file:
+      name: "/home/minio-user/.minio"
+      state: present
+      owner: minio-user
+      group: minio-user
+  - name: Create minio settings directory
+    ansible.builtin.file:
+      name: "/home/minio-user/.minio/certs"
+      state: present
+      owner: minio-user
+      group: minio-user      
+  - name: Create mino client settings directory
+    ansible.builtin.file:
+      name: "/home/almalinux/.mc"
+      state: present
+      owner: almalinux
+      group: almalinux
+  - name: Create mino settings directory
+    ansible.builtin.file:
+      name: "/home/almalinux/.mc/certs"
+      state: present
+      owner: almalinux
+      group: almalinux
+  - name: Copy the certificate to the minio-user directory
+    ansible.builtin.copy:
+      remote_src: true
+      owner: minio-user
+      group: minio-user
+      mode: "0600"
+      src: "/root/minio.crt"
+      dest: "/home/minio-user/.minio/certs/public.crt"
+  - name: Copy the key to the minio-user directory
+    ansible.builtin.copy:
+      remote_src: true
+      owner: minio-user
+      group: minio-user
+      mode: "0600"
+      src: "/root/minio.key"
+      dest: "/home/minio-user/.minio/certs/private.key"
+  - name: Copy the certificate to the almalinux mc directory
+    ansible.builtin.copy:
+      remote_src: true
+      owner: almalinux
+      group: almalinux
+      mode: "0600"
+      src: "/root/minio.crt"
+      dest: "/home/almalinux/.mc/certs/{{inventory_hostname}}.crt"
   - name: Create minio sub-dir of /data
     ansible.builtin.file:
       path: /data/minio
@@ -44,3 +106,11 @@
       name: minio
       state: started
       enabled: true
+  - name: Copy minio pass to almalinux directory
+    ansible.builtin.copy:
+      remote_src: true
+      owner: almalinux
+      group: almalinux
+      mode: "0600"
+      src: "/root/miniopass"
+      dest: "/home/almalinux/miniopass"
