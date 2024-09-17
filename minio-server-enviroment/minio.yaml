@@ -14,23 +14,8 @@
       password: "!"
       state: present
       name: minio-user
-  - name: Create private key
-    community.crypto.openssl_privatekey:
-      path: /root/minio.key
-  - name: Create certificate request
-    community.crypto.openssl_csr_pipe:
-      privatekey_path: /root/minio.key
-      common_name: "{{ inventory_hostname }}"
-      organization_name: "UCL"
-      subject_alt_name:
-       - "IP:{{ inventory_hostname }}"
-    register: csr
   - name: Create certificate
-    community.crypto.x509_certificate:
-      path: /root/minio.crt
-      csr_content: "{{ csr.csr }}"
-      privatekey_path: /root/minio.key
-      provider: selfsigned
+    ansible.shell.builtin: "openssl req -x509 -newkey rsa:4096 -keyout /root/minio.key -out /root/minio.crt -sha256 -days 3650 -nodes -subj '/CN={{inventory_hostname}}' -addext 'subjectAltName = IP:{{inventory_hostname}}'"
   - name: Create minio settings directory
     ansible.builtin.file:
       name: "/home/minio-user/.minio"
@@ -116,3 +101,11 @@
       mode: "0600"
       src: "./.miniopass"
       dest: "/home/almalinux/miniopass"
+      - name: Set up minio
+  - name: Setup mc for local access
+    ansible.builtin.template:
+      src: files/mc_config.json.j2
+      dest:  /home/almalinux/.mc/config.json
+      owner: almalinux
+      group: almalinux
+      mode: "0600"
