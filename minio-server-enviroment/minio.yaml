@@ -20,7 +20,7 @@
       src: "./files/generate_certs.sh"
       dest: "/root/generate_certs.sh"  
   - name: Create certificate
-    ansible.shell.builtin: "bash /root/generate_certs.sh {{inventory_hostname}}"
+    ansible.builtin.shell: "bash /root/generate_certs.sh {{inventory_hostname}}"
   - name: Create minio settings directory
     ansible.builtin.file:
       name: "/home/minio-user/.minio"
