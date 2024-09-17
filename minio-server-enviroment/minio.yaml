@@ -14,8 +14,13 @@
       password: "!"
       state: present
       name: minio-user
+  - name: Copy TLS generation stub
+    ansible.builtin.copy:
+      mode: "0700"
+      src: "./files/generate_certs.sh"
+      dest: "/root/generate_certs.sh"  
   - name: Create certificate
-    ansible.shell.builtin: "openssl req -x509 -newkey rsa:4096 -keyout /root/minio.key -out /root/minio.crt -sha256 -days 3650 -nodes -subj '/CN\={{inventory_hostname}}' -addext 'subjectAltName \= IP:{{inventory_hostname}}'"
+    ansible.shell.builtin: "bash /root/generate_certs.sh {{inventory_hostname}}"
   - name: Create minio settings directory
     ansible.builtin.file:
       name: "/home/minio-user/.minio"
