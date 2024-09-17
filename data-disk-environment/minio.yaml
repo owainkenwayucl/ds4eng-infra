@@ -13,6 +13,7 @@
       groups: minio-user
       password: "!"
       state: present
+      name: minio-user
   - name: Create minio sub-dir of /data
     ansible.builtin.file:
       path: /data/minio
