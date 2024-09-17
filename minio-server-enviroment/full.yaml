@@ -6,4 +6,3 @@
 - import_playbook: tools.yaml
 - import_playbook: second-disk.yaml
 - import_playbook: minio.yaml
-- import_playbook: almalinux-mc-config.yaml
