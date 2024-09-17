@@ -39,9 +39,15 @@
       state: directory
       owner: almalinux
       group: almalinux
-  - name: Create minio client settings directory
+  - name: Create minio client certs directory
     ansible.builtin.file:
       name: "/home/almalinux/.mc/certs"
+      state: directory
+      owner: almalinux
+      group: almalinux
+  - name: Create minio client CA directory
+    ansible.builtin.file:
+      name: "/home/almalinux/.mc/certs/CAs"
       state: directory
       owner: almalinux
       group: almalinux
@@ -69,6 +75,14 @@
       mode: "0600"
       src: "/root/minio.crt"
       dest: "/home/almalinux/.mc/certs/{{inventory_hostname}}.crt"
+  - name: Copy the certificate to the almalinux mc CA directory
+    ansible.builtin.copy:
+      remote_src: true
+      owner: almalinux
+      group: almalinux
+      mode: "0600"
+      src: "/root/minio.crt"
+      dest: "/home/almalinux/.mc/certs/CAs/local.crt"
   - name: Create minio sub-dir of /data
     ansible.builtin.file:
       path: /data/minio
