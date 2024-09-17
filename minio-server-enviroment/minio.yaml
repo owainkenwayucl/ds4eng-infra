@@ -12,6 +12,7 @@
       append: true
       groups: minio-user
       password: "!"
+      password_lock: true
       state: present
       name: minio-user
   - name: Copy TLS generation stub
