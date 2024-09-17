@@ -14,6 +14,9 @@
       password: "!"
       state: present
       name: minio-user
+  - name: Create private key
+    community.crypto.openssl_privatekey:
+      path: /root/minio.key
   - name: Create certificate request
     community.crypto.openssl_csr_pipe:
       privatekey_path: /root/minio.key
