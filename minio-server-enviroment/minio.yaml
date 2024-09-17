@@ -101,7 +101,6 @@
       mode: "0600"
       src: "./.miniopass"
       dest: "/home/almalinux/miniopass"
-      - name: Set up minio
   - name: Setup mc for local access
     ansible.builtin.template:
       src: files/mc_config.json.j2
