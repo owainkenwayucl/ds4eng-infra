@@ -25,7 +25,7 @@ resource "harvester_virtualmachine" "vm" {
   
   count = var.vm_count
 
-  name                 = "${var.username}-datadisk-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
+  name                 = "${var.username}-minio-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   namespace            = var.namespace
   restart_after_update = true
 
@@ -38,7 +38,7 @@ resource "harvester_virtualmachine" "vm" {
   secure_boot = true
 
   run_strategy    = "RerunOnFailure"
-  hostname        = "${var.username}-datadisk-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
+  hostname        = "${var.username}-minio-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   reserved_memory = "100Mi"
   machine_type    = "q35"
 
