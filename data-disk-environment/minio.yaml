@@ -1,0 +1,42 @@
+- name: Set up minio
+  become: true
+  become_user: root
+  tasks: 
+  - name: Create minio group
+    ansible.builtin.group:
+      name: minio-user
+      state: present
+  - name: Create minio user
+    ansible.builtin.user:
+      append: true
+      groups: minio-user
+      password: "!"
+      state: present
+  - name: Create minio sub-dir of /data
+    ansible.builtin.file:
+      path: /data/minio
+      owner: minio-user
+      group: minio-user
+      mode: "0700"
+      state: directory
+  - name: Install Minio RPM
+    ansible.builtin.dnf:
+      name: "https://dl.min.io/server/minio/release/linux-amd64/archive/minio-20240913202602.0.0-1.x86_64.rpm"
+      state: present
+  - name: Install Minio command-line
+    ansible.builtin.get_url:
+      dest: /usr/local/bin/mc
+      url: "https://dl.min.io/client/mc/release/linux-amd64/mc"
+      mode: "0755"
+  - name: Set up environment file
+    ansible.builtin.template:
+      src: files/minio.j2
+      dest:  /etc/default/minio
+      owner: root
+      group: minio-user
+      mode: "0640"
+  - name: Start Minio
+    ansible.builtin.systemd_service:
+      name: minio
+      state: started
+      enabled: true
