@@ -21,7 +21,7 @@
       organization_name: "UCL"
       subject_alt_name:
        - "IP:{{ inventory_hostname }}"
-      register: csr
+    register: csr
   - name: Create certificate
     community.crypto.x509_certificate:
       path: /root/minio.crt
