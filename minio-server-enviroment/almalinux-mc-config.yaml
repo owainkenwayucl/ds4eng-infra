@@ -3,4 +3,4 @@
   hosts: all
   tasks: 
   - name: Setup mc for local access
-    ansible.builtin.shell: "mc alias set local https://{{inventory_hostname}}:9000 myminioadmin $(cat ~/miniopass)
+    ansible.builtin.shell: "mc alias set local https://{{inventory_hostname}}:9000 myminioadmin $(cat ~/miniopass)"
