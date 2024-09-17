@@ -34,25 +34,25 @@
   - name: Create minio settings directory
     ansible.builtin.file:
       name: "/home/minio-user/.minio"
-      state: present
+      state: directory
       owner: minio-user
       group: minio-user
   - name: Create minio settings directory
     ansible.builtin.file:
       name: "/home/minio-user/.minio/certs"
-      state: present
+      state: directory
       owner: minio-user
       group: minio-user      
-  - name: Create mino client settings directory
+  - name: Create minio client settings directory
     ansible.builtin.file:
       name: "/home/almalinux/.mc"
-      state: present
+      state: directory
       owner: almalinux
       group: almalinux
-  - name: Create mino settings directory
+  - name: Create minio client settings directory
     ansible.builtin.file:
       name: "/home/almalinux/.mc/certs"
-      state: present
+      state: directory
       owner: almalinux
       group: almalinux
   - name: Copy the certificate to the minio-user directory
