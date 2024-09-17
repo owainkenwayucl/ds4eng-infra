@@ -111,9 +111,8 @@
       enabled: true
   - name: Copy minio pass to almalinux directory
     ansible.builtin.copy:
-      remote_src: true
       owner: almalinux
       group: almalinux
       mode: "0600"
-      src: "/root/miniopass"
+      src: "./.miniopass"
       dest: "/home/almalinux/miniopass"

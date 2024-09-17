@@ -4,7 +4,7 @@
 # MinIO recommends setting non-default values as a best practice, regardless of environment
 
 MINIO_ROOT_USER=myminioadmin
-MINIO_ROOT_PASSWORD="{{lookup('ansible.builtin.password', '/root/miniopass', length=16) }}"
+MINIO_ROOT_PASSWORD="{{lookup('ansible.builtin.password', './.miniopass', length=16) }}"
 
 # MINIO_VOLUMES sets the storage volume or path to use for the MinIO server.
 
