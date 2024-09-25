@@ -32,6 +32,9 @@
         - slurm-slurmctld
         - munge
         - nfs-utils
+        - links
+        - wget
+        - unzip
       state: latest
   - name: Set en-GB localization
     shell: "localectl set-locale en_GB.UTF-8"
