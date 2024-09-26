@@ -18,8 +18,17 @@ variable username {
 #  default = ""
 }
 
-
 variable vm_count {
   type    = number
-  default = 1
+  default = 2
+}
+
+variable ip_block {
+  type    = string
+  default = "192.168.51"
+}
+
+variable ip_offset {
+  type    = number
+  default = 0
 }

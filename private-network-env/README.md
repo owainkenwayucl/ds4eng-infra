@@ -13,23 +13,22 @@ Having set up two instances, one as a gateway and one as a test, a lot of sweari
 ## Gateway:
 
 ```shell
-nmcli con mod "System eth0" +ipv4.addresses 192.168.67.1/24  # adds a new IP on default interface.
+nmcli con mod "System eth0" +ipv4.addresses 192.168.68.1/24  # adds a new IP on default interface.
 nmcli con down "System eth0" && nmcli con up "System eth0" # reload state
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 sysctl -p
 dnf install -y firewalld
 systemctl enable --now firewalld
 firewall-cmd --zone=public --add-forward
-firewall-cmd --zone=public --add-rich-rule='rule family=ipv4 source address=192.168.67.0/24 masquerade'
+firewall-cmd --zone=public --add-rich-rule='rule family=ipv4 source address=192.168.68.0/24 masquerade'
 ```
 
 ## Clients
 
 ```shell
-nmcli con mod "System eth0" +ipv4.addresses 192.168.67.2/24
-nmcli con mod "System eth0" ipv4.gateway 192.168.67.1
+nmcli con mod "System eth0" +ipv4.addresses 192.168.68.2/24
+nmcli con mod "System eth0" ipv4.gateway 192.168.68.1
 nmcli con mod "System eth0" ipv4.method manual
 nmcli con mod "System eth0" ipv4.dns "10.134.10.1" 
-nmcli con mod "System eth0" -ipv4.addresses 10.134.10.10 # not clear if we need this as manual may remove it?
 nmcli con down "System eth0" && nmcli con up "System eth0"
 ```

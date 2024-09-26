@@ -13,11 +13,16 @@ resource "random_id" "secret" {
 }
 
 resource "harvester_cloudinit_secret" "cloud-config" {
-  name      = "cloud-config-${random_id.secret.hex}"
+  count = var.vm_count
+
+
+  name      = "cloud-config-${random_id.secret.hex}-${count.index}"
   namespace = var.namespace
 
   user_data = templatefile("cloud-init.tmpl.yml", {
       public_key_openssh = data.harvester_ssh_key.mysshkey.public_key
+      host_ip = "${var.ip_block}.${(count.index + 1 + var.ip_offset)}"
+      gateway = "${var.ip_block}.1"
     })
 }
 
@@ -61,6 +66,6 @@ resource "harvester_virtualmachine" "vm" {
   }
 
   cloudinit {
-    user_data_secret_name = harvester_cloudinit_secret.cloud-config.name
+    user_data_secret_name = "cloud-config-${random_id.secret.hex}-${count.index}"
   }
 }
