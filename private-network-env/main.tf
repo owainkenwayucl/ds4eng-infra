@@ -35,6 +35,7 @@ resource "harvester_cloudinit_secret" "cloud-config-gateway" {
       public_key_openssh = data.harvester_ssh_key.mysshkey.public_key
       host_ip = "${var.ip_block}.1"
       gateway = "${var.ip_block}.1"
+      block = "${var.ip_block}
     })
 }
 
