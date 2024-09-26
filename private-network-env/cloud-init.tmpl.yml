@@ -2,8 +2,8 @@
 bootcmd:
   - [ dnf, config-manager, --set-enabled, crb ]
   - [ dnf, install, -y, epel-release ]
-  - [ echo, Gateway:, ${gateway} ]
-  - [ echo, Address:, ${host_ip}]
+  - [ echo, ${gateway} ]
+  - [ echo, ${host_ip}]
 
 ssh_authorized_keys:
   - ${public_key_openssh}
