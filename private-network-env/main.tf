@@ -85,7 +85,7 @@ resource "harvester_virtualmachine" "vm" {
   }
 }
 
-resource "harvester_virtualmachine" "vm" {
+resource "harvester_virtualmachine" "gatewat-vm" {
   
   count = 1
 
