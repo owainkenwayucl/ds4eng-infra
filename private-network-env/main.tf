@@ -33,7 +33,7 @@ resource "harvester_cloudinit_secret" "cloud-config-gateway" {
 
   user_data = templatefile("cloud-init-gateway.tmpl.yml", {
       public_key_openssh = data.harvester_ssh_key.mysshkey.public_key
-      host_ip = "${var.ip_block}.${(count.index + 1 + var.ip_offset)}"
+      host_ip = "${var.ip_block}.1"
       gateway = "${var.ip_block}.1"
     })
 }
