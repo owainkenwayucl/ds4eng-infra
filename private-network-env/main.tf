@@ -27,8 +27,6 @@ resource "harvester_cloudinit_secret" "cloud-config" {
 }
 
 resource "harvester_cloudinit_secret" "cloud-config-gateway" {
-  count = 1
-
 
   name      = "cloud-config-gateway-${random_id.secret.hex}-${count.index}"
   namespace = var.namespace
@@ -125,6 +123,6 @@ resource "harvester_virtualmachine" "gatewat-vm" {
   }
 
   cloudinit {
-    user_data_secret_name = harvester_cloudinit_secret.cloud-config-gateway.name
+    user_data_secret_name = harvester_cloudinit_secret.cloud-config-gateway[count.index].name
   }
 }
