@@ -4,7 +4,7 @@ bootcmd:
   - cloud-init-per once add_priv_ip nmcli con mod 'System eth0' +ipv4.addresses '192.168.68.1/24'
   - cloud-init-per once eth_down nmcli con down 'System eth0'
   - cloud-init-per once eth_up nmcli con up 'System eth0'
-  - cloud-init-per once fw_on systemctl enable --now firewalld]
+  - cloud-init-per once fw_on systemctl enable --now firewalld
   - cloud-init-per once fw2_on echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
   - cloud-init-per once sys_rstrt sysctl -p
   - cloud-init-per once fw_fw firewall-cmd --zone=public --add-forward
