@@ -1,16 +1,11 @@
 #cloud-config
+bootcmd:
+  - cloud-init-per once add_priv_ip nmcli con mod 'System eth0' ipv4.addresses "${host_ip}/24"
+  - cloud-init-per once add_priv_gw nmcli con mod 'System eth0' ipv4.gateway  "${gateway}}/24"
+  - cloud-init-per once set_static nmcli con mod 'System eth0' ipv4.method manual 
+  - cloud-init-per once add_dns nmcli con mod 'System eth0' ipv4.dns "10.134.10.1" 
+  - cloud-init-per once eth_down nmcli con down 'System eth0'
+  - cloud-init-per once eth_up nmcli con up 'System eth0'
+  
 ssh_authorized_keys:
   - ${public_key_openssh}
-
-network:
-  version: 1
-  config: 
-  - type: physical
-    name: eth0
-    subnets:
-    - type: static
-      address: ${host_ip}/24
-      gateway: ${gateway}
-  - type: nameserver
-    address:
-    - 10.134.10.1
