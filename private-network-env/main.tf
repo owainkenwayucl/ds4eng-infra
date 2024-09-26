@@ -28,7 +28,7 @@ resource "harvester_cloudinit_secret" "cloud-config" {
 
 resource "harvester_cloudinit_secret" "cloud-config-gateway" {
 
-  name      = "cloud-config-gateway-${random_id.secret.hex}-${count.index}"
+  name      = "cloud-config-gateway-${random_id.secret.hex}"
   namespace = var.namespace
 
   user_data = templatefile("cloud-init-gateway.tmpl.yml", {
@@ -79,11 +79,11 @@ resource "harvester_virtualmachine" "vm" {
   }
 
   cloudinit {
-    user_data_secret_name = harvester_cloudinit_secret.cloud-config.name
+    user_data_secret_name = harvester_cloudinit_secret.cloud-config[count.index].name
   }
 }
 
-resource "harvester_virtualmachine" "gatewat-vm" {
+resource "harvester_virtualmachine" "gateway-vm" {
   
   count = 1
 
@@ -123,6 +123,6 @@ resource "harvester_virtualmachine" "gatewat-vm" {
   }
 
   cloudinit {
-    user_data_secret_name = harvester_cloudinit_secret.cloud-config-gateway[count.index].name
+    user_data_secret_name = harvester_cloudinit_secret.cloud-config-gateway.name
   }
 }
