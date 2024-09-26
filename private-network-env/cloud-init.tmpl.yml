@@ -1,9 +1,16 @@
 #cloud-config
-bootcmd:
-  - [ dnf, config-manager, --set-enabled, crb ]
-  - [ dnf, install, -y, epel-release ]
-  - [ echo, ${gateway} ]
-  - [ echo, ${host_ip}]
-
 ssh_authorized_keys:
   - ${public_key_openssh}
+
+network:
+  version: 1
+  config: 
+  - type: physical
+    name: eth0
+    subnets:
+    - type: static
+      address: ${host_ip}/24
+      gateway: ${gateway}
+  - type: nameserver
+    address:
+    - 10.134.10.1
