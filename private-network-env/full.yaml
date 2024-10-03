@@ -1,0 +1,7 @@
+---
+
+- import_playbook: dnsmasq-gateway.yaml
+- import_playbook: dnsmasq-nodes.yaml
+- import_playbook: update.yaml
+- import_playbook: reboot.yaml
+- import_playbook: reboot-gateway.yaml
