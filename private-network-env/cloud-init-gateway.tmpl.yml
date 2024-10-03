@@ -7,8 +7,8 @@ bootcmd:
   - cloud-init-per once fw_on systemctl enable --now firewalld
   - cloud-init-per once fw2_on echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
   - cloud-init-per once sys_rstrt sysctl -p
-  - cloud-init-per once fw_fw firewall-cmd --zone=public --add-forward
-  - cloud-init-per once fw_z firewall-cmd --zone=public --add-rich-rule="rule family=ipv4 source address=${block}.0/24 masquerade"
+  - cloud-init-per once fw_fw firewall-cmd --permanent --zone=public --add-forward
+  - cloud-init-per once fw_z firewall-cmd --permanent --zone=public --add-rich-rule="rule family=ipv4 source address=${block}.0/24 masquerade"
   - cloud-init-per once crb dnf config-manager --set-enabled crb
   - cloud-init-per once epel dnf install -y epel-release
 
