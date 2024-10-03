@@ -31,17 +31,17 @@ def generate_inventory():
 
     _meta = {}
     _meta["hostvars"] = host_vars
-    _all = { "children": ["gwnode", "nodes"] }
+    _all = { "children": ["gateway", "nodes"] }
 
     _nodes = { "hosts": nodes }
 
-    _gwnode = { "hosts" : [gw_node] }
+    _gateway = { "hosts" : [gw_node] }
 
     _jd = {}
     _jd["_meta"] = _meta
     _jd["all"] = _all
     _jd["nodes"] = _nodes
-    _jd["gwnode"] = _gwnode
+    _jd["gateway"] = _gateway
 
     jd = json.dumps(_jd, indent=4)
     return jd
