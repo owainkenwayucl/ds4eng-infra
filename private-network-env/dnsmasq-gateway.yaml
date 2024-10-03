@@ -1,0 +1,27 @@
+- name: Install DNSMasq on the gateway node
+  hosts: gateway
+  become: true
+  become_user: root
+  tasks: 
+  - name: Install DNSMasq package
+    ansible.builtin.dnf:
+      name:
+        - dnsmasq
+      state: latest
+  - name: Modify DNSMasq config (disable resolv.conf)
+    ansible.builtin.lineinfile:
+      dest: /etc/dnsmasq.conf
+      line: "no-resolv"
+  - name: Modify DNSMasq config (add DS4ENG DNS)
+    ansible.builtin.lineinfile:
+      dest: /etc/dnsmasq.conf
+      line: "server=10.134.12.1"
+  - name: Start DNSMasq
+    ansible.builtin.systemd_service:
+      name: dnsmasq
+      state: started
+      enabled: true
+  - name: Set local DNS server
+    ansible.builtin.shell: "nmcli con mod 'System eth0' ipv4.dns '127.0.0.1'"
+  - name: Restart interface
+    ansible.builtin.shell: "nmcli con down 'System eth0' && nmcli con up 'System eth0'"

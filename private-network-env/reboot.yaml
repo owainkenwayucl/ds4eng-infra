@@ -1,0 +1,7 @@
+- name: Post-update reboot
+  hosts: nodes
+  become: true
+  become_user: root
+  tasks: 
+  - name: Reboot
+    reboot:
