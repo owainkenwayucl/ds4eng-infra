@@ -50,8 +50,8 @@ resource "harvester_virtualmachine" "vm" {
 
   description = "Base VM"
 
-  cpu    = 2
-  memory = "16Gi"
+  cpu    = 1
+  memory = "4Gi"
 
   efi         = true
   secure_boot = true
@@ -94,8 +94,8 @@ resource "harvester_virtualmachine" "gateway-vm" {
 
   description = "Gateway VM"
 
-  cpu    = 2
-  memory = "16Gi"
+  cpu    = 1
+  memory = "4Gi"
 
   efi         = true
   secure_boot = true
