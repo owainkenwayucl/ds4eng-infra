@@ -16,11 +16,17 @@
     ansible.builtin.lineinfile:
       dest: /etc/dnsmasq.conf
       line: "server=10.134.12.1"
+  - name: Modify DNSMasq config (run on eth0)
+    ansible.builtin.lineinfile:
+      dest: /etc/dnsmasq.conf
+      line: "interface=eth0"
   - name: Start DNSMasq
     ansible.builtin.systemd_service:
       name: dnsmasq
       state: started
       enabled: true
+  - name: Allow DNS server through firewall
+    ansible.builtin.shell: "firewall-cmd --permanent --add-service=dns --zone=public"  
   - name: Set local DNS server
     ansible.builtin.shell: "nmcli con mod 'System eth0' ipv4.dns '127.0.0.1'"
   - name: Restart interface
