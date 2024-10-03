@@ -20,6 +20,18 @@
     ansible.builtin.lineinfile:
       dest: /etc/dnsmasq.conf
       line: "interface=eth0"
+  - name: Make DNSMasq depend on the network
+    ansible.builtin.lineinfile:
+      dest: /lib/systemd/system/dnsmasq.service
+      insertafter: "After=network.target"
+      line: "After=network-online.target"
+  - name: Make DNSMasq depend on the network (2)
+    ansible.builtin.lineinfile:
+      dest: /lib/systemd/system/dnsmasq.service
+      insertafter: "After=network-online.target"
+      line: "Wants=network-online.target"
+  - name: Reload systemd config files
+    ansible.builtin.shell: systemctl daemon-reload
   - name: Start DNSMasq
     ansible.builtin.systemd_service:
       name: dnsmasq
