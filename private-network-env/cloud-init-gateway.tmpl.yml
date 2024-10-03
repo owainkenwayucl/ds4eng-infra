@@ -9,6 +9,7 @@ bootcmd:
   - cloud-init-per once sys_rstrt sysctl -p
   - cloud-init-per once fw_fw firewall-cmd --permanent --zone=public --add-forward
   - cloud-init-per once fw_z firewall-cmd --permanent --zone=public --add-rich-rule="rule family=ipv4 source address=${block}.0/24 masquerade"
+  - cloud-init-per once fw_rl firewall-cmd --reload 
   - cloud-init-per once crb dnf config-manager --set-enabled crb
   - cloud-init-per once epel dnf install -y epel-release
 
