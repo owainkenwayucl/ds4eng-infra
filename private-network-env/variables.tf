@@ -30,5 +30,5 @@ variable ip_block {
 
 variable ip_offset {
   type    = number
-  default = 0
+  default = 1 # remember gateway is .1
 }
