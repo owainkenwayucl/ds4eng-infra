@@ -27,6 +27,8 @@
       enabled: true
   - name: Allow DNS server through firewall
     ansible.builtin.shell: "firewall-cmd --permanent --add-service=dns --zone=public"  
+  - name: Remove DHCP'd DNS server.
+    ansible.builtin.shell: "nmcli device mod eth0 ipv4.ignore-auto-dns yes"
   - name: Set local DNS server
     ansible.builtin.shell: "nmcli con mod 'System eth0' ipv4.dns '127.0.0.1'"
   - name: Restart interface
