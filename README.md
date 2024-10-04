@@ -18,7 +18,7 @@ I've writte the Terraform scripts with the assumption that your key is named aft
 
 ## 4. Deploy
 
-Set user name (or key name if different) in `variables.tf`
+Set user name and key name  in `variables.tf`
 
 To build an environment, set the number of servers (>= 2 for clusters!) in `variables.tf` then do:
 
