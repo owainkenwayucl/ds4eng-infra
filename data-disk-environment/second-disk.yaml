@@ -28,4 +28,14 @@
       src: "/dev/vdb1"
       path: /data
       opts: defaults
-
+  - name: Make user directory
+    ansible.builtin.file:
+      path: /data/almalinux
+      state: directory
+      owner: almalinux
+  - name: Link in home directory
+    ansible.builtin.file:
+      dest: /home/almalinux/data
+      state: link
+      src: /data/almalinux
+      owner: almalinux
