@@ -18,6 +18,10 @@ variable username {
 #  default = ""
 }
 
+variable keyname {
+  type = string
+#  default = ""
+}
 
 variable vm_count {
   type    = number

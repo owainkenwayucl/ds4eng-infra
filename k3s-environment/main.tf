@@ -4,7 +4,7 @@ data "harvester_image" "img" {
 }
 
 data "harvester_ssh_key" "mysshkey" {
-  name      = var.username
+  name      = var.keyname
   namespace = var.namespace
 }
 
