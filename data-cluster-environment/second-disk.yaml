@@ -1,5 +1,5 @@
 - name: Set up second disk
-  hosts: all
+  hosts: workers
   become: true
   become_user: root
   tasks: 
