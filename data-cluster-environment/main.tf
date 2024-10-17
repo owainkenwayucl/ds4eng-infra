@@ -52,7 +52,7 @@ resource "harvester_virtualmachine" "mgmtvm" {
   disk {
     name       = "rootdisk"
     type       = "disk"
-    size       = "300Gi"
+    size       = "75Gi"
     bus        = "virtio"
     boot_order = 1
 
@@ -96,7 +96,7 @@ resource "harvester_virtualmachine" "vm" {
   disk {
     name       = "rootdisk"
     type       = "disk"
-    size       = "50Gi"
+    size       = "75Gi"
     bus        = "virtio"
     boot_order = 1
 
@@ -104,15 +104,15 @@ resource "harvester_virtualmachine" "vm" {
     auto_delete = true
   }
 
-  disk {
-    name       = "datadisk"
-    type       = "disk"
-    size       = "300Gi"
-    bus        = "virtio"
-    boot_order = 2
-
-    auto_delete = true
-  }
+#  disk {
+#    name       = "datadisk"
+#    type       = "disk"
+#    size       = "300Gi"
+#    bus        = "virtio"
+#    boot_order = 2
+#
+#    auto_delete = true
+#  }
 
   cloudinit {
     user_data_secret_name = harvester_cloudinit_secret.cloud-config.name
