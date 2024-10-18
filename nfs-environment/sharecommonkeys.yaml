@@ -1,5 +1,5 @@
 - name: Share SSH keys
-  hosts: mgmtnode:workers
+  hosts: workers
   tasks: 
   - name: Put private keys
     ansible.builtin.copy:

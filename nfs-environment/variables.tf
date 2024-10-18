@@ -25,5 +25,5 @@ variable keyname {
 
 variable vm_count {
   type    = number
-  default = 4
+  default = 2
 }
