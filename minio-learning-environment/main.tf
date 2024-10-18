@@ -63,11 +63,23 @@ resource "harvester_virtualmachine" "vm" {
   disk {
     name       = "datadisk"
     type       = "disk"
-    size       = "500Gi"
+    size       = "100Gi"
     bus        = "virtio"
     boot_order = 2
 
     auto_delete = true
+  }
+
+  tags = {
+    condenser_ingress_isEnabled = true
+    condenser_ingress_os_hostname = "${var.username}-s3"
+    condenser_ingress_os_port = 9000
+    condenser_ingress_os_protocol = "https"
+    condesner_ingress_os_nginx_proxy-body-size = "100000m"
+    condenser_ingress_cons_hostname = "${var.username}-cons"
+    condenser_ingress_cons_port = 9001
+    condenser_ingress_cons_protocol = "https"
+    condesner_ingress_cons_nginx_proxy-body-size = "100000m"
   }
 
   cloudinit {
