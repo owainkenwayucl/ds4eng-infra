@@ -3,7 +3,7 @@
   become: true
   become_user: root
   tasks: 
-  - name: Install quality of life tools, compilers, python3, slurm
+  - name: Install quality of life tools, compilers, python3, nfs
     ansible.builtin.dnf:
       name:
         - glibc-langpack-en
