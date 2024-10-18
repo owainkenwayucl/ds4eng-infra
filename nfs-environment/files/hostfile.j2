@@ -1,0 +1,6 @@
+{% for node in groups["workers"] %}
+{{node}} workernode{{ lookup('ansible.utils.index_of', groups["workers"], 'eq', node) + 1 }}
+{% endfor %}
+{% for node in groups["mgmtnode"] %}
+{{node}} mgmtnode
+{% endfor %}
