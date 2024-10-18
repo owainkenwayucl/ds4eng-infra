@@ -19,7 +19,7 @@ def generate_inventory():
     counter = 0
     workers = []
 
-    command = "terraform output --json vm_ips".split()
+    command = "terraform output --json worker_vm_ips".split()
     ip_data = json.loads(run(command).stdout)
 
     for a in ip_data:
