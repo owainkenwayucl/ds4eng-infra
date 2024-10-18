@@ -1,0 +1,30 @@
+- name: Update packages and install minimum requirements.
+  hosts: all
+  become: true
+  become_user: root
+  tasks: 
+  - name: Install quality of life tools
+    ansible.builtin.dnf:
+      name:
+        - vim
+        - emacs
+        - nano
+        - screen
+        - tmux
+        - net-tools
+        - bind-utils
+        - htop
+        - git
+        - ansible
+        - make
+        - unzip
+        - wget
+        - links
+      state: latest
+  - name: Install Python 3
+    ansible.builtin.dnf:
+      name:
+        - python3-devel
+        - python3-pip
+        - python3-virtualenv
+      state: latest

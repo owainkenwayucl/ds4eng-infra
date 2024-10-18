@@ -1,0 +1,20 @@
+- name: Set up minio
+  become: true
+  become_user: root
+  hosts: all
+  tasks: 
+  - name: Delete old RPM
+    ansible.builtin.file:
+      path: "/root/minio.rpm"
+      state: absent
+  - name: Get Minio RPM
+    ansible.builtin.get_url:
+      dest: "/root/minio.rpm"
+      url: "https://dl.min.io/server/minio/release/linux-amd64/archive/minio-20240922003343.0.0-1.x86_64.rpm"
+  - name: Install Minio RPM
+    ansible.builtin.shell: dnf install -y /root/minio.rpm
+  - name: Install Minio command-line
+    ansible.builtin.get_url:
+      dest: /usr/local/bin/mc
+      url: "https://dl.min.io/client/mc/release/linux-amd64/mc"
+      mode: "0755"
