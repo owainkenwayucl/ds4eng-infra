@@ -27,14 +27,11 @@
         - bzip2
         - python3-mpi4py-openmpi
         - make
-        - slurm
-        - slurm-slurmd
-        - slurm-slurmctld
-        - munge
         - nfs-utils
         - links
         - wget
         - unzip
+        - ufw
       state: latest
   - name: Set en-GB localization
     shell: "localectl set-locale en_GB.UTF-8"
