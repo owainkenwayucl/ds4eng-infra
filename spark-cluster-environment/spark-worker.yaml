@@ -1,0 +1,5 @@
+- name: Start spark workers
+  hosts: workers
+  tasks: 
+  - name: Start spark workers
+    ansible.builtin.shell: spark-3.5.3-bin-hadoop3-scala2.13/sbin/start-worker.sh mgmtnode:7077

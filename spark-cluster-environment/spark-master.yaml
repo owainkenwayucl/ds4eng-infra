@@ -1,0 +1,5 @@
+- name: Start spark master
+  hosts: mgmtnode
+  tasks: 
+  - name: Start spark master
+    ansible.builtin.shell: spark-3.5.3-bin-hadoop3-scala2.13/sbin/start-master.sh 
