@@ -1,0 +1,2 @@
+spark.authenticate true
+spark.authenticate.secret "{{lookup('ansible.builtin.password', './.sparkpass', length=16) }}"
