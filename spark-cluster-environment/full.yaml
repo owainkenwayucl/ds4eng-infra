@@ -10,3 +10,6 @@
 - import_playbook: sharecommonkeys.yaml
 - import_playbook: userfiles.yaml
 - import_playbook: firewall.yaml
+- import_playbook: spark-install.yaml
+- import_playbook: spark-master.yaml
+- import_playbook: spark-worker.yaml
