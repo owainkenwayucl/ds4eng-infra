@@ -9,5 +9,5 @@
     ansible.builtin.unarchive:
       dest: /home/almalinux/
       remote_src: true
-      src: /home/almalinux/spark.tar.gz
+      src: /home/almalinux/hadoop.tar.gz
 
