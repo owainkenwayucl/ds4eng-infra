@@ -1,4 +1,4 @@
-- name: Install and configure spark
+- name: Install and configure hadoop
   hosts: mgmtnode
   tasks: 
   - name: create namenode
