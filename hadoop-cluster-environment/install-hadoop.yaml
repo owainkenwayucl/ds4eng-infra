@@ -95,4 +95,11 @@
             <name>mapred.framework.name</name>
             <value>yarn</value>
         </property>
-      state: present      
+      state: present
+  - name: fix JAVA_HOME in haddop-env.sh
+    ansible.builtin.blockinfile:
+      path: /home/almalinux/hadoop-3.4.0/etc/hadoop/hadoop-env.sh 
+      insertafter: "# export JAVA_HOME="
+      block: |
+        export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+      state: present
