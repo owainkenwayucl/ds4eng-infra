@@ -25,7 +25,7 @@
   - name: config core-site.xml
     ansible.builtin.blockinfile:
       path: /home/almalinux/hadoop-3.4.0/etc/hadoop/core-site.xml
-      after: <configuration>
+      insertafter: <configuration>
       marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
       block: |
         <property>
