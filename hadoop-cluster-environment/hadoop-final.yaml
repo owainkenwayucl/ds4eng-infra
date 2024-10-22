@@ -1,0 +1,9 @@
+- name: Install and configure hadoop
+  hosts: mgmtnode
+  tasks: 
+  - name: format cluster
+    ansible.builtin.shell: hdfs namenode -format
+  - name: start dfs
+    ansible.builtin.shell: /home/almalinux/hadoop-3.4.0/sbin/start-dfs.sh
+  - name: start yarn
+    ansible.builtin.shell: /home/almalinux/hadoop-3.4.0/sbin/start-yarn.sh
