@@ -4,7 +4,7 @@
   - name: Download hadoop
     ansible.builtin.get_url:
       dest: /home/almalinux/hadoop.tar.gz
-      url: "https://dlcdn.apache.org/hadoop/common/hadoop-3.4.0/hadoop-3.4.0-src.tar.gz"
+      url: "https://dlcdn.apache.org/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz"
   - name: Unpack tgz file
     ansible.builtin.unarchive:
       dest: /home/almalinux/
