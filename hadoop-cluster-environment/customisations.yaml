@@ -1,0 +1,40 @@
+- name: Customise VMs for course
+  hosts: all
+  become: true
+  become_user: root
+  tasks: 
+  - name: Install quality of life tools, compilers, python3, slurm
+    ansible.builtin.dnf:
+      name:
+        - glibc-langpack-en
+        - vim
+        - emacs
+        - nano
+        - screen
+        - tmux
+        - net-tools
+        - bind-utils
+        - htop
+        - git
+        - python3-devel
+        - python3-pip
+        - python3-virtualenv
+        - patch
+        - bzip2
+        - make
+        - nfs-utils
+        - links
+        - wget
+        - unzip
+        - ufw
+        - java-21-openjdk
+      state: latest
+  - name: Set en-GB localization
+    shell: "localectl set-locale en_GB.UTF-8"
+  - name: Set time-zone
+    shell: "timedatectl set-timezone Europe/London"
+  - name: Create hosts file
+    ansible.builtin.blockinfile:
+      block: "{{ lookup('template', 'files/hostfile.j2') }}"
+      dest:  /etc/hosts
+      insertafter: "EOF"
