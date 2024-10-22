@@ -1,0 +1,10 @@
+- name: Install and configure spark
+  hosts: mgmtnode
+  tasks: 
+  - name: cerate namenode
+    ansible.builtin.file:
+      path: /opt/hadoop_tmp/hdfs/namenode
+  - name: generate worker file
+    ansible.builtin.template:
+      src: files/workers.j2
+      dest: hadoop-3.4.0/etc/hadoop/workers
