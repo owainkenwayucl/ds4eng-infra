@@ -30,10 +30,10 @@
       block: |
         <property>
             <name>fs.default.name</name>
-            <value>hdfs://master:9000/</value>
+            <value>hdfs://mgmtnode:9000/</value>
         </property>
         <property>
             <name>fs.default.FS</name>
-            <value>hdfs://master:9000/</value>
+            <value>hdfs://mgmtnode:9000/</value>
         </property>
       state: present
