@@ -81,6 +81,10 @@
             <name>yarn.resourcemanager.address</name>
             <value>mgmtnode:8050</value>
         </property>
+        <property>
+            <name>yarn.log-aggregation-enable</name>
+            <value>true</value>
+        </property>
       state: present
   - name: config mapred-site.xml
     ansible.builtin.blockinfile:
