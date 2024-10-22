@@ -22,5 +22,18 @@
         export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
         export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
       state: present
-
-
+  - name: config core-site.xml
+    ansible.builtin.blockinfile:
+      path: /home/almalinux/hadoop-3.4.0/etc/hadoop/core-site.xml
+      after: <configuration>
+      marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+      block: |
+        <property>
+            <name>fs.default.name</name>
+            <value>hdfs://master:9000/</value>
+        </property>
+        <property>
+            <name>fs.default.FS</name>
+            <value>hdfs://master:9000/</value>
+        </property>
+      state: present
