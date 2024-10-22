@@ -10,3 +10,7 @@
 - import_playbook: sharecommonkeys.yaml
 - import_playbook: userfiles.yaml
 - import_playbook: firewall.yaml
+- import_playbook: install-hadoop.yaml
+- import_playbook: hadoop-mgmt.yaml
+- import_playbook: hadoop-worker.yaml
+- import_playbook: hadoop-final.yaml
