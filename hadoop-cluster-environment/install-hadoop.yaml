@@ -20,7 +20,7 @@
         export YARN_HOME=$HADOOP_HOME
         export PATH=$PATH:$HADOOP_INSTALL/bin:$HOME/spark-3.5.3-bin-hadoop3-scala2.13/bin
         export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-        export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+        export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
         export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
       state: present
   - name: config core-site.xml
