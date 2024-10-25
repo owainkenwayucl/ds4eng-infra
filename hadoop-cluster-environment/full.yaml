@@ -15,3 +15,4 @@
 - import_playbook: hadoop-worker.yaml
 - import_playbook: hadoop-final.yaml
 - import_playbook: spark-install.yaml
+- import_playbook: second-disk.yaml
