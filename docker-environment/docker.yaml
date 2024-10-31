@@ -16,7 +16,6 @@
     ansible.builtin.copy:
       dest: /etc/docker/daemon.json
       src: ./files/daemon.json
-      state: present
   - name: Enable Docker Service
     ansible.builtin.service:
       name: docker
