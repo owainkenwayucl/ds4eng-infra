@@ -94,7 +94,7 @@
   - name: Get Minio RPM
     ansible.builtin.get_url:
       dest: "/root/minio.rpm"
-      url: "https://dl.min.io/server/minio/release/linux-amd64/archive/minio-20240922003343.0.0-1.x86_64.rpm"
+      url: "https://dl.min.io/server/minio/release/linux-amd64/archive/minio-20241013133411.0.0-1.x86_64.rpm"
   - name: Install Minio RPM
     ansible.builtin.shell: dnf install -y /root/minio.rpm
   - name: Install Minio command-line
