@@ -16,6 +16,18 @@
     ansible.builtin.copy:
       dest: /etc/docker/daemon.json
       src: ./files/daemon.json
+  - name: Ensure certificate directory
+    ansible.builtin.file:
+      path: /etc/docker/certs.d
+      state: directory
+  - name: Create directory for cache certificate
+    ansible.builtin.file:
+      path: "/etc/docker/certs.d/10.134.12.37:4000"
+      state: directory
+  - name: Install cache certificate
+    ansible.builtin.copy:
+      dest: "/etc/docker/certs.d/10.134.12.37:4000/ca.crt"
+      src: ./files/tls.crt
   - name: Enable Docker Service
     ansible.builtin.service:
       name: docker
