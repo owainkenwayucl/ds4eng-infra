@@ -38,3 +38,11 @@
       path: /etc/rancher/k3s/k3s.yaml
       regexp: '127.0.0.1'
       replace: "{{groups['headnode'][0]}}"
+  - name: Install Helm tools
+    ansible.builtin.shell: "curl -sfL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -l  -"
+  - name: Add Bitnami repo
+    ansible.builtin.shell: "/usr/local/bin/helm repo add bitnami https://charts.bitnami.com/bitnami"
+  - name: Add JupyterHub repo
+    ansible.builtin.shell: "/usr/local/bin/helm repo add jupyterhub https://hub.jupyter.org/helm-chart/"
+  - name: Refresh helm repos
+    ansible.builtin.shell: "/usr/local/bin/helm repo update"
