@@ -6,24 +6,35 @@
   become_user: root
   tasks:
   - name: Add /usr/local/bin to $PATH
-    copy:
+    ansible.builtin.copy:
       content: "export PATH=/usr/local/bin:$PATH"
       dest: "/etc/profile.d/usrlocal.sh"
   - name: Create directory for registry file [1].
-    file: 
+    ansible.builtin.file: 
       path: "/etc/rancher"
       state: directory
   - name: Create directory for registry file [2].
-    file: 
+    ansible.builtin.file: 
       path: "/etc/rancher/k3s"
       state: directory
   - name: Install registry file
-    copy:
+    ansible.builtin.copy:
       src: ./files/registries.yaml
       dest: "/etc/rancher/k3s/registries.yaml"
       mode: "0640"
   - name: Download and install K3s
-    shell: "curl -sfL https://get.k3s.io | bash -"
+    ansible.builtin.shell: "curl -sfL https://get.k3s.io | bash -"
     environment:
       K3S_URL: "https://{{ groups['headnode'][0] }}:6443"
       K3S_TOKEN: "{{ nodetoken }}"
+  - name: copy over k3s kubeconf
+    ansible.builtin.copy:
+      src: .generated/k3s.yaml
+      dest: /etc/rancher/k3s/k3s.yaml
+      mode: "0640"
+      group: docker
+  - name: fix ip address
+    ansible.builtin.replace:
+      path: /etc/rancher/k3s/k3s.yaml
+      regexp: '127.0.0.1'
+      replace: "{{groups['headnode'][0]}}"

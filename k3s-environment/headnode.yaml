@@ -4,44 +4,49 @@
   become_user: root
   tasks:
   - name: Add /usr/local/bin to $PATH
-    copy:
+    ansible.builtin.copy:
       content: "export PATH=/usr/local/bin:$PATH"
       dest: "/etc/profile.d/usrlocal.sh"
   - name: Create directory for registry file [1].
-    file: 
+    ansible.builtin.file: 
       path: "/etc/rancher"
       state: directory
   - name: Create directory for registry file [2].
-    file: 
+    ansible.builtin.file: 
       path: "/etc/rancher/k3s"
       state: directory
   - name: Install registry file
-    copy:
+    ansible.builtin.copy:
       src: ./files/registries.yaml
       dest: "/etc/rancher/k3s/registries.yaml"
       mode: "0640"
   - name: Download and install K3s
-    shell: "curl -sfL https://get.k3s.io | bash -"
+    ansible.builtin.shell: "curl -sfL https://get.k3s.io | bash -"
   - name: Set KUBECONFIG.
-    copy:
+    ansible.builtin.copy:
       content: "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml"
       dest: "/etc/profile.d/kubeconf.sh"
   - name: Set permissions on KUBECONFIG
-    file:
+    ansible.builtin.file:
       path: "/etc/rancher/k3s/k3s.yaml"
       owner: "root"
       group: "docker"
       mode: "0640"
+  - name: Fetch kubeconf
+    ansible.builtin.fetch:
+      dest: .generated/
+      flat: true
+      src: /etc/rancher/k3s/k3s.yaml
   - name: Install Helm tools
-    shell: "curl -sfL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -l  -"
+    ansible.builtin.shell: "curl -sfL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -l  -"
   - name: Add Bitnami repo
-    shell: "/usr/local/bin/helm repo add bitnami https://charts.bitnami.com/bitnami"
+    ansible.builtin.shell: "/usr/local/bin/helm repo add bitnami https://charts.bitnami.com/bitnami"
   - name: Add JupyterHub repo
-    shell: "/usr/local/bin/helm repo add jupyterhub https://hub.jupyter.org/helm-chart/"
+    ansible.builtin.shell: "/usr/local/bin/helm repo add jupyterhub https://hub.jupyter.org/helm-chart/"
   - name: Refresh helm repos
-    shell: "/usr/local/bin/helm repo update"
+    ansible.builtin.shell: "/usr/local/bin/helm repo update"
   - name: Get token
-    fetch: 
+    ansible.builtin.fetch: 
       src: "/var/lib/rancher/k3s/server/node-token"
       dest: "./"
       flat: true
