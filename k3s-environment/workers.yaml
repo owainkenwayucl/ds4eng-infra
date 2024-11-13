@@ -9,6 +9,19 @@
     copy:
       content: "export PATH=/usr/local/bin:$PATH"
       dest: "/etc/profile.d/usrlocal.sh"
+  - name: Create directory for registry file [1].
+    file: 
+      path: "/etc/rancher"
+      state: directory
+  - name: Create directory for registry file [2].
+    file: 
+      path: "/etc/rancher/k3s"
+      state: directory
+  - name: Install registry file
+    copy:
+      src: ./files/registries.yaml
+      dest: "/etc/rancher/k3s/registries.yaml"
+      mode: "0640"
   - name: Download and install K3s 😣
     shell: "curl -sfL https://get.k3s.io | bash -"
     environment:

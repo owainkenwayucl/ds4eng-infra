@@ -3,31 +3,44 @@
   become: true
   become_user: root
   tasks:
-  - name: Add /usr/local/bin to $PATH 😱
+  - name: Add /usr/local/bin to $PATH
     copy:
       content: "export PATH=/usr/local/bin:$PATH"
       dest: "/etc/profile.d/usrlocal.sh"
-  - name: Download and install K3s 😣
+  - name: Create directory for registry file [1].
+    file: 
+      path: "/etc/rancher"
+      state: directory
+  - name: Create directory for registry file [2].
+    file: 
+      path: "/etc/rancher/k3s"
+      state: directory
+  - name: Install registry file
+    copy:
+      src: ./files/registries.yaml
+      dest: "/etc/rancher/k3s/registries.yaml"
+      mode: "0640"
+  - name: Download and install K3s
     shell: "curl -sfL https://get.k3s.io | bash -"
-  - name: Set KUBECONFIG. 😓
+  - name: Set KUBECONFIG.
     copy:
       content: "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml"
       dest: "/etc/profile.d/kubeconf.sh"
-  - name: Set permissions on KUBECONFIG 🙃
+  - name: Set permissions on KUBECONFIG
     file:
       path: "/etc/rancher/k3s/k3s.yaml"
       owner: "root"
       group: "docker"
       mode: "0640"
-  - name: Install Helm tools 🫠
+  - name: Install Helm tools
     shell: "curl -sfL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -l  -"
-  - name: Add Bitnami repo 🤩
+  - name: Add Bitnami repo
     shell: "/usr/local/bin/helm repo add bitnami https://charts.bitnami.com/bitnami"
-  - name: Add JupyterHub repo 🤓
+  - name: Add JupyterHub repo
     shell: "/usr/local/bin/helm repo add jupyterhub https://hub.jupyter.org/helm-chart/"
-  - name: Refresh helm repos 🥲
+  - name: Refresh helm repos
     shell: "/usr/local/bin/helm repo update"
-  - name: Get token 🕵️
+  - name: Get token
     fetch: 
       src: "/var/lib/rancher/k3s/server/node-token"
       dest: "./"
