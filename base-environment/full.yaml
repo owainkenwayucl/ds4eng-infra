@@ -4,3 +4,4 @@
 - import_playbook: local.yaml
 - import_playbook: reboot.yaml
 - import_playbook: tools.yaml
+- import_playbook: userfiles.yaml
