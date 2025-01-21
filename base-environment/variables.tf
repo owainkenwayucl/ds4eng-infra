@@ -5,22 +5,22 @@ variable img_display_name {
 
 variable namespace {
   type = string
-#  default = "ds4eng-ns"
+  default = "ds4eng-ns"
 }
 
 variable network_name {
   type = string
-#  default = "ds4eng-ns/ds4eng"
+  default = "ds4eng-ns/ds4eng"
 }
 
 variable username {
   type = string
-#  default = ""
+  default = "u-dzedu2fhog"
 }
 
 variable keyname {
   type = string
-#  default = ""
+  default = "dbuchan"
 }
 
 variable vm_count {

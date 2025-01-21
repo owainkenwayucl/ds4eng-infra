@@ -1,0 +1,19 @@
+- name: Install slurm worker daemons
+  hosts: workers
+  become: true
+  become_user: root
+  tasks: 
+  - name: Delete default slurm config
+    ansible.builtin.file:
+      path: /etc/slurm/slurm.conf
+      state: absent
+  - name: Create link to shared slurm config
+    ansible.builtin.file:
+      src: /nfs/config/slurm.conf
+      dest: /etc/slurm/slurm.conf
+      state: link
+  - name: Start Slurmd
+    ansible.builtin.systemd_service:
+      name: slurmd
+      state: started
+      enabled: true

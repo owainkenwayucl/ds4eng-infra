@@ -1,0 +1,22 @@
+- name: NFS client Configuration
+  hosts: workers:loginnode
+  become: true
+  become_user: root
+  tasks:
+  - name: Make directory to export
+    ansible.builtin.file:
+      path: /nfs
+      state: directory
+  - name: NFS mount
+    ansible.posix.mount:
+      boot: true
+      state: mounted
+      fstype: nfs
+      src: "{{groups['mgmtnode'][0]}}:/nfs"
+      path: /nfs
+      opts: defaults,_netdev
+  - name: Create home directory sym-link
+    ansible.builtin.file:
+      src: /nfs/almalinux
+      dest: /home/almalinux/nfs
+      state: link

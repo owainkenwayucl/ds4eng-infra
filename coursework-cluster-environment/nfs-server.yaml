@@ -1,0 +1,31 @@
+- name: NFS Server Configuration
+  hosts: mgmtnode
+  become: true
+  become_user: root
+  tasks:
+  - name: Make directory to export
+    ansible.builtin.file:
+      path: /nfs
+      state: directory
+  - name: Create exports file
+    template:
+      src: files/exports.j2
+      dest:  /etc/exports
+      mode: "0644"
+  - name: Run exportfs
+    ansible.builtin.shell: exportfs -a
+  - name: Enable NFS server service
+    ansible.builtin.service:
+      name: nfs-server
+      enabled: true
+      state: started 
+  - name: Make user directory
+    ansible.builtin.file:
+      path: /nfs/almalinux
+      state: directory
+      owner: almalinux
+  - name: Create home directory sym-link
+    ansible.builtin.file:
+      src: /nfs/almalinux
+      dest: /home/almalinux/nfs
+      state: link

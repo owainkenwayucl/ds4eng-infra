@@ -1,0 +1,21 @@
+- name: Generate shared Munge keys
+  hosts: loginnode
+  become: true
+  become_user: root
+  tasks: 
+  - name: Delete Existing Key
+    ansible.builtin.file:
+      state: absent 
+      path: /etc/munge/munge.key  
+  - name: Generate key
+    ansible.builtin.shell: create-munge-key
+  - name: Get munge keys
+    ansible.builtin.fetch:
+      src: /etc/munge/munge.key
+      dest: ./.generated/munge/
+      flat: true
+  - name: Start munge
+    ansible.builtin.systemd_service:
+      name: munge
+      state: started
+      enabled: true

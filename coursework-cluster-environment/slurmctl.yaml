@@ -1,0 +1,29 @@
+- name: Set up slurm controller
+  hosts: mgmtnode
+  become: true
+  become_user: root
+  tasks: 
+  - name: Config directory
+    ansible.builtin.file:
+      path: /nfs/config
+      state: directory
+      mode: "0755"
+  - name: Setup Slurm conf
+    ansible.builtin.template:
+      src: files/slurm.conf.j2
+      dest:  /nfs/config/slurm.conf
+      mode: "0644"
+  - name: Delete default slurm config
+    ansible.builtin.file:
+      path: /etc/slurm/slurm.conf
+      state: absent
+  - name: Create link to shared slurm config
+    ansible.builtin.file:
+      src: /nfs/config/slurm.conf
+      dest: /etc/slurm/slurm.conf
+      state: link
+  - name: Start Slurmctld
+    ansible.builtin.systemd_service:
+      name: slurmctld
+      state: started
+      enabled: true

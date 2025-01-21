@@ -1,0 +1,17 @@
+- name: Share Munge keys
+  hosts: mgmtnode:workers
+  become: true
+  become_user: root
+  tasks: 
+  - name: Put munge key
+    ansible.builtin.copy:
+      src: ./.generated/munge/munge.key
+      dest: /etc/munge/munge.key
+      owner: munge
+      group: munge
+      mode: 0400
+  - name: Start munge
+    ansible.builtin.systemd_service:
+      name: munge
+      state: started
+      enabled: true

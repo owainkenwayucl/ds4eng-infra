@@ -1,0 +1,14 @@
+- name: Set up slurm login node
+  hosts: loginnode
+  become: true
+  become_user: root
+  tasks: 
+  - name: Delete default slurm config
+    ansible.builtin.file:
+      path: /etc/slurm/slurm.conf
+      state: absent
+  - name: Create link to shared slurm config
+    ansible.builtin.file:
+      src: /nfs/config/slurm.conf
+      dest: /etc/slurm/slurm.conf
+      state: link
