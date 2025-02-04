@@ -15,12 +15,12 @@ variable network_name {
 
 variable username {
   type = string
-  default = "u-dzedu2fhog"
+#  default = ""
 }
 
 variable keyname {
   type = string
-  default = "dbuchan"
+#  default = ""
 }
 
 variable vm_count {
