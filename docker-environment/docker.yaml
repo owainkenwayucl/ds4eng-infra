@@ -3,6 +3,11 @@
   become: true
   become_user: root
   tasks: 
+  - name: Install iptables-nft
+    ansible.builtin.dnf:
+      name:
+        - iptables-nft
+      state: latest
   - name: Install Docker
     ansible.builtin.dnf:
       name:
