@@ -1,0 +1,4 @@
+---
+
+- import_playbook: prepare_primary.yaml
+- import_playbook: prepare_replicas.yaml
