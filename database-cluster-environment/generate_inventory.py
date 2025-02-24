@@ -33,16 +33,16 @@ def generate_inventory():
 
     _meta = {}
     _meta["hostvars"] = host_vars
-    _all = { "children": ["primary", "replicas"] }
+    _all = { "children": ["primary_node", "replicas"] }
 
     _replicas = { "hosts": replicas }
-    _primary = { "hosts": [primary] }
+    _primary = { "hosts": [primary_node] }
 
     _jd = {}
     _jd["_meta"] = _meta
     _jd["all"] = _all
     _jd["replicas"] = _replicas
-    _jd["primary"] = _primary
+    _jd["primary_node"] = _primary
 
 
 
