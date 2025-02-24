@@ -19,9 +19,6 @@ def generate_inventory():
     command = "terraform output --json replica_ips".split()
     ip_data = json.loads(run(command).stdout)
 
-    host_vars = {}
-
-
     counter = 0
     replicas = []
 
