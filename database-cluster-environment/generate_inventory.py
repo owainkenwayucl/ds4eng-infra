@@ -8,31 +8,43 @@ def run(command):
     return subprocess.run(command, capture_output=True, encoding='UTF-8')
 
 def generate_inventory():
-    command = "terraform output --json vm_ips".split()
+    command = "terraform output --json primary_ips".split()
+    ip_data = json.loads(run(command).stdout)
+    primary_node = ip_data.pop()
+
+    host_vars = {}
+
+    host_vars[primary_node] = { "ip": [primary_node] }
+    
+    command = "terraform output --json replica_ips".split()
     ip_data = json.loads(run(command).stdout)
 
     host_vars = {}
 
 
     counter = 0
-    workers = []
+    replicas = []
 
     for a in ip_data:
         name = a
         host_vars[name] = { "ip": [a] }
-        workers.append(name)
+        replicas.append(name)
         counter += 1
 
     _meta = {}
     _meta["hostvars"] = host_vars
-    _all = { "children": ["workers"] }
+    _all = { "children": ["primary", "replicas"] }
 
-    _workers = { "hosts": workers }
+    _replicas = { "hosts": replicas }
+    _primary = { "hosts": [primary] }
 
     _jd = {}
     _jd["_meta"] = _meta
     _jd["all"] = _all
-    _jd["workers"] = _workers
+    _jd["replicas"] = _replicas
+    _jd["primary"] = _primary
+
+
 
     jd = json.dumps(_jd, indent=4)
     return jd
