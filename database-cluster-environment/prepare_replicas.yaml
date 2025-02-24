@@ -1,0 +1,30 @@
+- name: Set up primary node for replication
+  hosts: replicas
+  tasks: 
+  - name: Stop postgresql
+    ansible.builtin.service: 
+      name: postgresql 
+      state: stopped
+    become: true
+  - name: Clear out DB folder
+    ansible.builtin.file:
+      state: absent
+      path: /var/lib/pgsql/data
+    become: true
+    become_user: postgres
+  - name: Snapshot primary
+    ansible.builtin.shell: "PGPASSWORD={{lookup('ansible.builtin.password', './.replicatorpass', length=16) }} pg_basebackup -h {{groups['primary'][0]}} -U replicator -D /var/lib/pgsql/data -Fp -Xs -P"
+    become: true
+    become_user: postgres
+  - name: Enable replication
+    ansible.builtin.blockinfile:
+      path: "/var/lib/pgsql/data/postgresql.conf"
+      block: |
+        primary_conninfo = "host={{groups['primary'][0]}} port=5432 user=replicator password={{lookup('ansible.builtin.password', './.replicatorpass', length=16) }}"
+    become: true
+    become_user: postgres 
+  - name: Stop postgresql
+    ansible.builtin.service: 
+      name: postgresql 
+      state: started
+    become: true
