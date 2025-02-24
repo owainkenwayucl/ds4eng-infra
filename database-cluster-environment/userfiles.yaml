@@ -1,0 +1,17 @@
+- name: Set up user config files
+  hosts: all
+  tasks: 
+  - name: OpenMPI Config directory
+    ansible.builtin.file:
+      path: /home/almalinux/.openmpi
+      state: directory
+  - name: OpenMPI Config
+    ansible.builtin.copy:
+      src: ./files/mca-params.conf
+      dest: /home/almalinux/.openmpi/mca-params.conf
+  - name: Add OpenMPI to path
+    ansible.builtin.lineinfile:
+      insertafter: "EOF"
+      line: "export PATH=/usr/lib64/openmpi/bin:$PATH"
+      path: /home/almalinux/.bashrc
+      state: present
