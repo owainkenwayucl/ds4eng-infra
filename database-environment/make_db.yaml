@@ -7,7 +7,7 @@
       login_host: "{{inventory_hostname}}"
       login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
       login_user: almalinux
-      ca_cert:  "./generated/server.crt"
+      ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
   - name: Connect to the instance we just made, and create a simple table
     # E.g.  engine =  psycopg2.connect(database='postgres',user='jamespjh',
@@ -17,7 +17,7 @@
       login_host: "{{inventory_hostname}}"
       login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
       login_user: almalinux
-      ca_cert:  "./generated/server.crt"
+      ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
       name: molecule_elements
       db: molecules
@@ -31,7 +31,7 @@
       login_host: "{{inventory_hostname}}"
       login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
       login_user: almalinux
-      ca_cert:  "./generated/server.crt"
+      ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
       db: molecules
       query: INSERT INTO molecule_elements (molecule, num, element) VALUES ('co2', 1, 'c')
@@ -41,7 +41,7 @@
       login_host: "{{inventory_hostname}}"
       login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
       login_user: almalinux
-      ca_cert:  "./generated/server.crt"
+      ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
       db: molecules
       query: SELECT * FROM molecule_elements

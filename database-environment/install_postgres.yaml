@@ -74,6 +74,16 @@
     become: true
     become_user: postgres    
 
+  - name: Create certificate dir for almalinux user
+    ansible.builtin.file:
+      path: /home/almalinux/generated
+      state: directory
+  
+  - name: Copy in server cert.
+    ansible.builtin.copy:
+      dest: /home/almalinux/generated/server.crt
+      src: "./generated/server.crt"
+
   - name: Turn on TLS
     ansible.builtin.blockinfile:
       path: "/var/lib/pgsql/data/postgresql.conf"
@@ -84,7 +94,7 @@
     become: true
     become_user: postgres 
     notify: restart postgres #Or it won't see the change in config file
-    
+
   - name: "Allow md5 connection for the db user"
   # https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_pg_hba_module.html#ansible-collections-community-postgresql-postgresql-pg-hba-module
     community.postgresql.postgresql_pg_hba:
