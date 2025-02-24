@@ -42,14 +42,14 @@
       name: "almalinux" # This is postgres's own user
       password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
       role_attr_flags: CREATEDB
-    become: yes
+    become: true
     become_user: postgres #This is the system user.
 
   - name: Set listening to all remote IPs
     community.postgresql.postgresql_set: 
       name: listen_addresses
       value: 0.0.0.0 # Not very secure, do something different for real
-    become: yes
+    become: true
     become_user: postgres
     notify: restart postgres #Or it won't see the change in config file
 
@@ -58,10 +58,12 @@
       mode: "0700"
       src: "./files/generate_certs.sh"
       dest: "/var/lib/pgsql/generate_certs.sh"  
+    become: true
     become_user: postgres 
 
   - name: Create certificate
     ansible.builtin.shell: "bash /var/lib/pgsql/generate_certs.sh {{inventory_hostname}}"
+    become: true
     become_user: postgres 
 
   - name: "Allow md5 connection for the db user"
