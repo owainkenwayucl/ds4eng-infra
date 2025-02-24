@@ -1,5 +1,5 @@
 - name: on the device, install postgres and configure it
-  hosts: all
+  hosts: primary_node
   tasks: 
   - name: Connect to the primary we just made, and create a DB
     community.postgresql.postgresql_db:
