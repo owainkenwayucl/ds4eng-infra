@@ -13,17 +13,13 @@
     become: true
     become_user: postgres
   - name: Snapshot primary
-    ansible.builtin.shell: "PGPASSWORD={{lookup('ansible.builtin.password', './.replicatorpass', length=16) }} pg_basebackup -h {{groups['primary_node'][0]}} -U replicator -D /var/lib/pgsql/data -Fp -Xs"
+    ansible.builtin.shell: "PGPASSWORD={{lookup('ansible.builtin.password', './.replicatorpass', length=16) }} pg_basebackup -h {{groups['primary_node'][0]}} -U replicator -D /var/lib/pgsql/data -v -R -X stream"
     become: true
     become_user: postgres
   - name: Enable replication
-    ansible.builtin.blockinfile:
+    ansible.builtin.template::
       path: "/var/lib/pgsql/data/postgresql.conf"
-      block: |
-        primary_conninfo = 'host={{groups["primary_node"][0]}} port=5432 user=replicator password={{lookup("ansible.builtin.password", "./.replicatorpass", length=16) }}'
-        ssl = on
-        ssl_cert_file = 'server.crt'
-        ssl_key_file = 'server.key'
+      src: "files/replica_postgres.j2"
     become: true
     become_user: postgres 
   - name: Start postgresql
