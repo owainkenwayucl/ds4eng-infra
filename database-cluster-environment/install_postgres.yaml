@@ -68,9 +68,9 @@
   
   - name: Bring back certificates
     ansible.builtin.fetch:
-      dest: "./generated/server.crt"
+      dest: "./generated/{{inventory_hostname}}_server.crt"
       flat: true
-      src: "/var/lib/pgsql/data/{{inventory_hostname}}_server.crt"
+      src: "/var/lib/pgsql/data/server.crt"
     become: true
     become_user: postgres    
 
