@@ -20,7 +20,7 @@
     ansible.builtin.blockinfile:
       path: "/var/lib/pgsql/data/postgresql.conf"
       block: |
-        primary_conninfo = 'host={{groups["primary_node"][0]}} port=5432 user=replicator password={{lookup("ansible.builtin.password", ""./.replicatorpass", length=16) }}'
+        primary_conninfo = 'host={{groups["primary_node"][0]}} port=5432 user=replicator password={{lookup("ansible.builtin.password", "./.replicatorpass", length=16) }}'
     become: true
     become_user: postgres 
   - name: Stop postgresql
