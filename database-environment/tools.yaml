@@ -19,7 +19,6 @@
         - make
         - unzip
         - wget
-        - links
       state: latest
   - name: Install Python 3
     ansible.builtin.dnf:
@@ -27,6 +26,7 @@
         - python3-devel
         - python3-pip
         - python3-virtualenv
+        - python3-sqlalchemy
       state: latest
   - name: Install compilers
     ansible.builtin.dnf:
