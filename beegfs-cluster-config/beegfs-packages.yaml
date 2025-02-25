@@ -9,9 +9,9 @@
       state: latest
   - name: BeeGFS Repo
     ansible.builtin.yum_repository:
-      baseurl: "https://www.beegfs.io/release/beegfs_7.4.4/dists/rhel9"
+      baseurl: "https://www.beegfs.io/release/beegfs_7.4.5/dists/rhel9"
       state: present
-      gpgkey: "https://www.beegfs.io/release/beegfs_7.4.4/gpg/GPG-KEY-beegfs"
+      gpgkey: "https://www.beegfs.io/release/beegfs_7.4.5/gpg/GPG-KEY-beegfs"
       gpgcheck: true
       name: "BeeGFS"
       description: "BeeGFS repo"
