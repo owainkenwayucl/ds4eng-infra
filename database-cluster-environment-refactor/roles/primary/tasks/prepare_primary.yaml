@@ -1,5 +1,3 @@
-
-tasks: 
 - name: "Create replication user"
   community.postgresql.postgresql_user:
     state: present
@@ -34,10 +32,3 @@ tasks:
   become: yes
   become_user: postgres 
   notify: restart postgres #Or it won't see the change in config file
-
-handlers:
-  - name: restart postgres
-    ansible.builtin.service: 
-      name: postgresql 
-      state: restarted
-    become: true

@@ -1,4 +1,3 @@
-tasks: 
 - name: Connect to the primary we just made, and create a DB
   community.postgresql.postgresql_db:
     name: molecules

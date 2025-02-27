@@ -1,5 +1,6 @@
 ---
-- import_playbook: local.yaml
-- import_playbook: update.yaml
-- import_playbook: reboot.yaml
-- import_playbook: tools.yaml
+- import_tasks: local.yaml
+- import_tasks: update.yaml
+- import_tasks: reboot.yaml
+- import_tasks: tools.yaml
+- import_tasks: install_postgres.yaml

@@ -1,4 +1,3 @@
-tasks: 
 - name: Install English localisation
   ansible.builtin.dnf:
     name:
