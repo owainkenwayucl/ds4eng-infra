@@ -1,0 +1,26 @@
+- name: Stop postgresql
+  ansible.builtin.service: 
+    name: postgresql 
+    state: stopped
+  become: true
+- name: Clear out DB folder
+  ansible.builtin.file:
+    state: absent
+    path: /var/lib/pgsql/data
+  become: true
+  become_user: postgres
+- name: Snapshot primary
+  ansible.builtin.shell: "PGPASSWORD={{lookup('ansible.builtin.password', './.replicatorpass', length=16) }} pg_basebackup -h {{groups['primary_node'][0]}} -U replicator -D /var/lib/pgsql/data -v -R -X stream"
+  become: true
+  become_user: postgres
+- name: Enable replication
+  ansible.builtin.template:
+    dest: "/var/lib/pgsql/data/postgresql.conf"
+    src: "templates/replica_postgres.j2"
+  become: true
+  become_user: postgres 
+- name: Start postgresql
+  ansible.builtin.service: 
+    name: postgresql 
+    state: started
+  become: true

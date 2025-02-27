@@ -1,0 +1,7 @@
+- name: Post-update reboot
+  hosts: all
+  become: true
+  become_user: root
+  tasks: 
+  - name: Reboot
+    reboot:
