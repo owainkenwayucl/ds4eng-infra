@@ -1,9 +1,7 @@
-- name: Update AlmaLinux
-  hosts: all
+tasks: 
+- name: Update packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
   become: true
   become_user: root
-  tasks: 
-  - name: Update packages
-    ansible.builtin.dnf:
-      name: "*"
-      state: latest

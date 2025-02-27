@@ -1,52 +1,50 @@
-- name: on the device, install postgres and configure it
-  hosts: primary_node
-  tasks: 
-  - name: Connect to the primary we just made, and create a DB
-    community.postgresql.postgresql_db:
-      name: molecules
-      login_host: "{{inventory_hostname}}"
-      login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
-      login_user: almalinux
-      ca_cert:  "/home/almalinux/generated/server.crt"
-      ssl_mode: "verify-full"
-  - name: Connect to the instance we just made, and create a simple table
-    # E.g.  engine =  psycopg2.connect(database='postgres',user='jamespjh',
-    # password='TeachingDataEngineeringInsecurely',host='exemplar-db.cvvluwyhowbt.eu-west-2.rds.amazonaws.com',port=5432)
-    # https://galaxy.ansible.com/ui/repo/published/community/postgresql/content/module/postgresql_table/
-    community.postgresql.postgresql_table:
-      login_host: "{{inventory_hostname}}"
-      login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
-      login_user: almalinux
-      ca_cert:  "/home/almalinux/generated/server.crt"
-      ssl_mode: "verify-full"
-      name: molecule_elements
-      db: molecules
-      columns:
-      - molecule text primary key
-      - num int
-      - element text
+tasks: 
+- name: Connect to the primary we just made, and create a DB
+  community.postgresql.postgresql_db:
+    name: molecules
+    login_host: "{{inventory_hostname}}"
+    login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
+    login_user: almalinux
+    ca_cert:  "/home/almalinux/generated/server.crt"
+    ssl_mode: "verify-full"
+- name: Connect to the instance we just made, and create a simple table
+  # E.g.  engine =  psycopg2.connect(database='postgres',user='jamespjh',
+  # password='TeachingDataEngineeringInsecurely',host='exemplar-db.cvvluwyhowbt.eu-west-2.rds.amazonaws.com',port=5432)
+  # https://galaxy.ansible.com/ui/repo/published/community/postgresql/content/module/postgresql_table/
+  community.postgresql.postgresql_table:
+    login_host: "{{inventory_hostname}}"
+    login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
+    login_user: almalinux
+    ca_cert:  "/home/almalinux/generated/server.crt"
+    ssl_mode: "verify-full"
+    name: molecule_elements
+    db: molecules
+    columns:
+    - molecule text primary key
+    - num int
+    - element text
 
-  - name: Connect to the instance we just made, and run a SQL query
-    community.postgresql.postgresql_query:
-      login_host: "{{inventory_hostname}}"
-      login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
-      login_user: almalinux
-      ca_cert:  "/home/almalinux/generated/server.crt"
-      ssl_mode: "verify-full"
-      db: molecules
-      query: INSERT INTO molecule_elements (molecule, num, element) VALUES ('co2', 1, 'c')
+- name: Connect to the instance we just made, and run a SQL query
+  community.postgresql.postgresql_query:
+    login_host: "{{inventory_hostname}}"
+    login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
+    login_user: almalinux
+    ca_cert:  "/home/almalinux/generated/server.crt"
+    ssl_mode: "verify-full"
+    db: molecules
+    query: INSERT INTO molecule_elements (molecule, num, element) VALUES ('co2', 1, 'c')
 
-  - name: Connect to the instance we just made, and run a SQL query
-    community.postgresql.postgresql_query:
-      login_host: "{{inventory_hostname}}"
-      login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
-      login_user: almalinux
-      ca_cert:  "/home/almalinux/generated/server.crt"
-      ssl_mode: "verify-full"
-      db: molecules
-      query: SELECT * FROM molecule_elements
-    register: result
+- name: Connect to the instance we just made, and run a SQL query
+  community.postgresql.postgresql_query:
+    login_host: "{{inventory_hostname}}"
+    login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
+    login_user: almalinux
+    ca_cert:  "/home/almalinux/generated/server.crt"
+    ssl_mode: "verify-full"
+    db: molecules
+    query: SELECT * FROM molecule_elements
+  register: result
 
-  - name: Print the example
-    ansible.builtin.debug:
-      var: result   
+- name: Print the example
+  ansible.builtin.debug:
+    var: result   

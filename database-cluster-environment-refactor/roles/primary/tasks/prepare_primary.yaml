@@ -1,44 +1,43 @@
-- name: Set up primary node for replication
-  hosts: primary_node
-  tasks: 
-  - name: "Create replication user"
-    community.postgresql.postgresql_user:
-      state: present
-      name: "replicator" # This is the replication user
-      password: "{{lookup('ansible.builtin.password', './.replicatorpass', length=16) }}"
-      role_attr_flags: REPLICATION
-    become: true
-    become_user: postgres #This is the system user.
-  - name: Enable replication
-    ansible.builtin.blockinfile:
-      path: "/var/lib/pgsql/data/postgresql.conf"
-      block: |
-        wal_level = replica
-        max_wal_senders = 5        
-        wal_keep_size = 64
-        ssl = on
-        ssl_cert_file = 'server.crt'
-        ssl_key_file = 'server.key'
-    become: true
-    become_user: postgres 
-    notify: restart postgres #Or it won't see the change in config file
-  - name: "Allow md5 connection for the replication user"
-  # https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_pg_hba_module.html#ansible-collections-community-postgresql-postgresql-pg-hba-module
-    community.postgresql.postgresql_pg_hba:
-      dest: "~/data/pg_hba.conf" # The homedir is /var/lib/pgsql
-      contype: host
-      databases: replication
-      address: all # Insecure, but we only enabled my IP on Security Group anyway
-      method: md5 # Require a password
-      users: replicator
-      create: true
-    become: yes
-    become_user: postgres 
-    notify: restart postgres #Or it won't see the change in config file
 
-  handlers:
-    - name: restart postgres
-      ansible.builtin.service: 
-        name: postgresql 
-        state: restarted
-      become: true
+tasks: 
+- name: "Create replication user"
+  community.postgresql.postgresql_user:
+    state: present
+    name: "replicator" # This is the replication user
+    password: "{{lookup('ansible.builtin.password', './.replicatorpass', length=16) }}"
+    role_attr_flags: REPLICATION
+  become: true
+  become_user: postgres #This is the system user.
+- name: Enable replication
+  ansible.builtin.blockinfile:
+    path: "/var/lib/pgsql/data/postgresql.conf"
+    block: |
+      wal_level = replica
+      max_wal_senders = 5        
+      wal_keep_size = 64
+      ssl = on
+      ssl_cert_file = 'server.crt'
+      ssl_key_file = 'server.key'
+  become: true
+  become_user: postgres 
+  notify: restart postgres #Or it won't see the change in config file
+- name: "Allow md5 connection for the replication user"
+# https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_pg_hba_module.html#ansible-collections-community-postgresql-postgresql-pg-hba-module
+  community.postgresql.postgresql_pg_hba:
+    dest: "~/data/pg_hba.conf" # The homedir is /var/lib/pgsql
+    contype: host
+    databases: replication
+    address: all # Insecure, but we only enabled my IP on Security Group anyway
+    method: md5 # Require a password
+    users: replicator
+    create: true
+  become: yes
+  become_user: postgres 
+  notify: restart postgres #Or it won't see the change in config file
+
+handlers:
+  - name: restart postgres
+    ansible.builtin.service: 
+      name: postgresql 
+      state: restarted
+    become: true

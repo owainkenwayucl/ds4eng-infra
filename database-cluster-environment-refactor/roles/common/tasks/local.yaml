@@ -1,14 +1,16 @@
-- name: Set up en-GB and time-zone
-  hosts: all
+tasks: 
+- name: Install English localisation
+  ansible.builtin.dnf:
+    name:
+      - glibc-langpack-en
+    state: latest
   become: true
   become_user: root
-  tasks: 
-  - name: Install English localisation
-    ansible.builtin.dnf:
-      name:
-        - glibc-langpack-en
-      state: latest
-  - name: Set en-GB localization
-    shell: "localectl set-locale en_GB.UTF-8"
-  - name: Set time-zone
-    shell: "timedatectl set-timezone Europe/London"
+- name: Set en-GB localization
+  shell: "localectl set-locale en_GB.UTF-8"
+  become: true
+  become_user: root
+- name: Set time-zone
+  shell: "timedatectl set-timezone Europe/London"
+  become: true
+  become_user: root
