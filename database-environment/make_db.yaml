@@ -3,7 +3,7 @@
   tasks: 
   - name: Connect to the primary we just made, and create a DB
     community.postgresql.postgresql_db:
-      name: molecules
+      name: molecules_ansible
       login_host: "{{inventory_hostname}}"
       login_password: "{{lookup('ansible.builtin.password', './.postgrespass', length=16) }}"
       login_user: almalinux
@@ -20,7 +20,7 @@
       ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
       name: molecule_elements
-      db: molecules
+      db: molecules_ansible
       columns:
       - molecule text primary key
       - num int
@@ -33,7 +33,7 @@
       login_user: almalinux
       ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
-      db: molecules
+      db: molecules_ansible
       query: INSERT INTO molecule_elements (molecule, num, element) VALUES ('co2', 1, 'c')
 
   - name: Connect to the instance we just made, and run a SQL query
@@ -43,7 +43,7 @@
       login_user: almalinux
       ca_cert:  "/home/almalinux/generated/server.crt"
       ssl_mode: "verify-full"
-      db: molecules
+      db: molecules_ansible
       query: SELECT * FROM molecule_elements
     register: result
 
