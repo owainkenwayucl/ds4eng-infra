@@ -2,7 +2,7 @@
 - hosts: all
   roles:
   - common
-- hosts: primary
+- hosts: primary_node
   roles: 
   - primary
 - hosts: replicas
