@@ -8,7 +8,7 @@ export PGSSLROOTCERT="${directory}/generated/server.crt"
 export PGPASSWORD=$(cat ${directory}/.postgrespass)
 
 cd ${directory}
-server=$(terraform output -json | jq -c -r .vm_ips.value[0])
+server=$(terraform output -json | jq -c -r .primary_ips.value[0])
 cd ${c_directory}
 
 psql -h ${server} "$@"
