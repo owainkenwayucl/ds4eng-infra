@@ -55,7 +55,7 @@
   become_user: postgres 
 
 - name: Check to see if we already have certificates
-  ansible.builtin.stat
+  ansible.builtin.stat:
     path: /var/lib/pgsql/data/server.crt
   register: certfile
 
