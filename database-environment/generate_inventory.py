@@ -8,7 +8,7 @@ def run(command):
     return subprocess.run(command, capture_output=True, encoding='UTF-8')
 
 def generate_inventory():
-    command = "terraform output --json vm_ips".split()
+    command = "terraform output --json primary_ips".split()
     ip_data = json.loads(run(command).stdout)
 
     host_vars = {}
