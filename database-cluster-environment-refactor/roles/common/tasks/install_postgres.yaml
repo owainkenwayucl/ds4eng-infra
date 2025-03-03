@@ -58,6 +58,7 @@
   ansible.builtin.stat:
     path: /var/lib/pgsql/data/server.crt
   register: certfile
+  become: true
 
 - name: Create certificate
   ansible.builtin.shell: "bash /var/lib/pgsql/generate_certs.sh {{inventory_hostname}}"
