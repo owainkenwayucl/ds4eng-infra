@@ -12,11 +12,7 @@
       - postgresql-server
       - python3
       - python3-pip
-
-  - name: install python bindings for Postgres there
-    ansible.builtin.pip:
-      name: psycopg2-binary
-    become: true
+      - python3-psycopg2
 
   - name: "Find out if PostgreSQL is initialized"
     ansible.builtin.stat:
