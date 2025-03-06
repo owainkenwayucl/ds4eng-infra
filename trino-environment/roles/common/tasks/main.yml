@@ -6,3 +6,4 @@
 - import_tasks: reboot.yaml
 - import_tasks: tools.yaml
 - import_tasks: firewall.yaml
+- import_tasks: commonkeys.yaml
