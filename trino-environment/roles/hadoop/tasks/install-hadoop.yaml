@@ -29,11 +29,11 @@
     block: |
       <property>
           <name>fs.default.name</name>
-          <value>hdfs://localhost:9000/</value>
+          <value>hdfs://trino:9000/</value>
       </property>
       <property>
           <name>fs.default.FS</name>
-          <value>hdfs://localhost:9000/</value>
+          <value>hdfs://trino:9000/</value>
       </property>
     state: present
 - name: config hdfs-site.xml
@@ -54,7 +54,7 @@
       </property>
       <property>
           <name>dfs.namenode.http-address</name>
-          <value>localhost:50070</value>
+          <value>trino:50070</value>
       </property>
       <property>
           <name>dfs.replication</name>
@@ -69,15 +69,15 @@
     block: |
       <property>
           <name>yarn.resourcemanager.resource-tracker.address</name>
-          <value>localhost:8025</value>
+          <value>trino:8025</value>
       </property>
       <property>
           <name>yarn.resourcemanager.scheduler.address</name>
-          <value>localhost:8035</value>
+          <value>trino:8035</value>
       </property>
       <property>
           <name>yarn.resourcemanager.address</name>
-          <value>localhost:8050</value>
+          <value>trino:8050</value>
       </property>
       <property>
           <name>yarn.log-aggregation-enable</name>
@@ -92,7 +92,7 @@
     block: |
       <property>
           <name>mapreduce.job.tracker</name>
-          <value>localhost:5431</value>
+          <value>trino:5431</value>
       </property>
       <property>
           <name>mapred.framework.name</name>

@@ -1,4 +1,6 @@
 ---
+- import_tasks: hostname.yaml
+- import_tasks: hostfile.yaml
 - import_tasks: local.yaml
 - import_tasks: update.yaml
 - import_tasks: reboot.yaml
