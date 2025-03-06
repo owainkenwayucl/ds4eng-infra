@@ -1,0 +1,16 @@
+- name: Add hadoop tmp directory
+  ansible.builtin.file:
+    path: /opt/hadoop_tmp
+    owner: almalinux
+    group: almalinux
+    state: directory
+  become: true
+  become_user: root
+- name: Add hdfs directory
+  ansible.builtin.file:
+    path: /opt/hadoop_tmp/hdfs
+    state: directory
+- name: create datanode
+  ansible.builtin.file:
+    path: /opt/hadoop_tmp/hdfs/datanode
+    state: directory
