@@ -1,0 +1,40 @@
+- name: Install quality of life tools
+  ansible.builtin.dnf:
+    name:
+      - vim
+      - emacs
+      - nano
+      - screen
+      - tmux
+      - net-tools
+      - bind-utils
+      - htop
+      - git
+      - ansible
+      - make
+      - unzip
+      - wget
+    state: latest
+  become: true
+  become_user: root
+- name: Install Python 3
+  ansible.builtin.dnf:
+    name:
+      - python3-devel
+      - python3-pip
+      - python3-virtualenv
+      - python3-sqlalchemy
+    state: latest
+  become: true
+  become_user: root
+- name: Install compilers
+  ansible.builtin.dnf:
+    name:
+    - g++
+    - gfortran
+    - patch
+    - bzip2
+    - make
+    state: latest
+  become: true
+  become_user: root
