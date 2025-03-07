@@ -3,3 +3,4 @@ trino_path: /usr/local/trino/trino-server-440/
 trino_install_path: /usr/local/trino/
 trino_env:
   JAVA_HOME: /usr/lib/jvm/java-21-openjdk-21.0.2.0.13-1.el9.x86_64
+minio_host: https://uccaoke-trinos3.comp0235.condenser.arc.ucl.ac.uk/
