@@ -18,3 +18,5 @@
     path: /usr/local/bin/python
     src: /usr/bin/python3
     state: link
+  become: true
+  become_user: root
