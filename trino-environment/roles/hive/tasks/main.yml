@@ -37,3 +37,18 @@
       dest: "{{ hive_path }}/lib/bundle-2.24.6.jar"
     - src: "/home/almalinux/hadoop-3.4.1/share/hadoop/tools/lib/hadoop-aws-3.4.1.jar"
       dest: "{{ hive_path }}/lib/hadoop-aws-3.4.1.jar"
+- name: Configure the Hive management DB
+  ansible.builtin.command: "{{ hive_path }}/bin/schematool -dbType derby -initSchema"
+  environment: "{{ hadoop_env }}"
+  args:
+    chdir: "{{ hive_path }}"
+    creates: "{{ hive_path }}/metastore_db"
+  become: true
+- name: Pass the configuration templates
+  ansible.builtin.template:
+    src: metastore-site.xml
+    dest: "{{ hive_path }}/conf/metastore-site.xml"
+  become: true
+  notify:
+    - Restart Hive
+#    - Restart Trino

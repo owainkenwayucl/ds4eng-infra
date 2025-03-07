@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<!-- These are default values meant to allow easy smoke testing of the metastore.  You will
+likely need to add a number of new values. -->
+<configuration>
+  <property>
+    <name>metastore.thrift.uris</name>
+    <value>thrift://localhost:9083</value>
+    <description>Thrift URI. Thrift is the RPC library used by Hive Metastore.</description>
+  </property>
+  <property>
+    <name>metastore.task.threads.always</name>
+    <value>org.apache.hadoop.hive.metastore.events.EventCleanerTask</value>
+  </property>
+  <property>
+    <name>metastore.expression.proxy</name>
+    <value>org.apache.hadoop.hive.metastore.DefaultPartitionExpressionProxy</value>
+  </property>
+
+<property> 
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:derby:;databaseName=metastore_db;create=true</value>
+    <description>
+        Tell it where to find the Relational database to use. Here, a local path on disk to $HIVE_HOME/metastore_db
+    </description>
+  </property>
+
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>org.apache.derby.jdbc.EmbeddedDriver</value>
+    <description>Tell it what kind of remote deatabase it is using, here, derby. We could change this to postgres.</description>
+  </property>
+
+<property>  
+    <name>hive.metastore.event.db.notification.api.auth</name>
+    <value>false</value>
+    <description>We won't bother with any security! Arrr... </description>
+</property>
+
+<property>  
+    <name>fs.s3a.connection.ssl.enabled</name>
+    <value>false</value>
+    <description>We could tell it the password to talk to AWS, but we don't need to, as we have an instance role, and we're just inside AWS.</description>
+</property>
+<property>
+    <name>fs.s3a.path.style.access</name>
+    <value>true</value>
+    <description>We want the s3a:// protocol available for us to specify where Hive Tables live on s3</description>
+</property>
+
+</configuration>
