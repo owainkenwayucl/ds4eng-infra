@@ -1,0 +1,5 @@
+---
+- name: Restart Trino
+  become: true
+  ansible.builtin.command: "{{ trino_path }}/bin/launcher restart"
+  environment: "{{ trino_env }}"

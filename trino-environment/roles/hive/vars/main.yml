@@ -1,10 +1,6 @@
+---
 hive_path: /usr/local/hive/apache-hive-metastore-3.1.3-bin
 hive_install_path: /usr/local/hive/
 hive_env:
   HIVE_HOME: /usr/local/hive/apache-hive-metastore-3.1.3-bin
   METASTORE_HOME: /usr/local/hive/apache-hive-metastore-3.1.3-bin
-hadoop_path: /home/almalinux/hadoop-3.4.1
-hadoop_install_path: /home/almalinux/hadoop-3.4.1
-hadoop_env:
-  HADOOP_HOME: /home/almalinux/hadoop-3.4.1
-  JAVA_HOME: /usr/lib/jvm/java-11-openjdk-11.0.25.0.9-3.el9.x86_64

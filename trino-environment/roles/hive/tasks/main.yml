@@ -1,3 +1,11 @@
+---
+- name: Install yum packages
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+  become: true
+  vars:
+    packages:
+      - java-1.8.0-openjdk
 - name: Install pip packages
   ansible.builtin.pip:
     name: lxml
@@ -21,7 +29,7 @@
   become: true
   notify:
     - Restart Hive
-#    - Restart Trino
+    - Restart Trino
 - name: Just force systemd to reread configs (2.4 and above)
   ansible.builtin.systemd_service:
     daemon_reload: true
@@ -33,17 +41,12 @@
     state: link
   become: true
   loop:
-    - src: "/home/almalinux/hadoop-3.4.1/share/hadoop/tools/lib/bundle-2.24.6.jar"
-      dest: "{{ hive_path }}/lib/bundle-2.24.6.jar"
-    - src: "/home/almalinux/hadoop-3.4.1/share/hadoop/tools/lib/hadoop-aws-3.4.1.jar"
-      dest: "{{ hive_path }}/lib/hadoop-aws-3.4.1.jar"
-- name: Configure the Hive management DB
-  ansible.builtin.command: "{{ hive_path }}/bin/schematool -dbType derby -initSchema"
-  environment: "{{ hadoop_env }}"
-  args:
-    chdir: "{{ hive_path }}"
-    creates: "{{ hive_path }}/metastore_db"
-  become: true
+    - src: "{{ hadoop_path }}/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.367.jar"
+      dest: "{{ hive_path }}/lib/aws-java-sdk-bundle-1.12.367.jar"
+    - src: "{{ hadoop_path }}/share/hadoop/tools/lib/hadoop-aws-3.3.6.jar"
+      dest: "{{ hive_path }}/lib/hadoop-aws-3.3.6.jar"
+#  src: "{{hadoop_path}}/share/hadoop/common/lib/guava-27.0-jre.jar"
+#  dest: "{{hive_path}}/lib/guava-27.0-jre.jar"
 - name: Pass the configuration templates
   ansible.builtin.template:
     src: metastore-site.xml
@@ -51,4 +54,11 @@
   become: true
   notify:
     - Restart Hive
-#    - Restart Trino
+    - Restart Trino
+- name: Configure the Hive management DB
+  ansible.builtin.command: "{{ hive_path }}/bin/schematool -dbType derby -initSchema"
+  environment: "{{ hadoop_env }}"
+  args:
+    chdir: "{{ hive_path }}"
+    creates: "{{ hive_path }}/metastore_db"
+  become: true

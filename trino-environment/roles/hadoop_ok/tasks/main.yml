@@ -1,0 +1,5 @@
+---
+- import_tasks: install-hadoop.yaml
+- import_tasks: hadoop-mgmt.yaml
+- import_tasks: hadoop-worker.yaml
+- import_tasks: hadoop-final.yaml

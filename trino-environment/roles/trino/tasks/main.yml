@@ -1,0 +1,48 @@
+---
+- name: Install yum packages
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+  become: true
+  vars:
+    packages:
+      - java-21-openjdk
+- name: Select the 21 java as system default
+  # The other services will pick up JAVA 8 through their JAVA_HOME
+  ansible.builtin.command: update-alternatives --set java java-21-openjdk.x86_64
+  become: true
+- name: Create folder for trino
+  ansible.builtin.file:
+    path: "{{ trino_install_path }}"
+    state: directory
+  become: true
+- name: Fetch the trino distribution
+  ansible.builtin.unarchive:
+    src: https://repo1.maven.org/maven2/io/trino/trino-server/440/trino-server-440.tar.gz
+    dest: "{{ trino_install_path }}"
+    remote_src: true
+    creates: "{{ trino_path }}" # Idempotency
+  become: true
+- name: Pass the configuration templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ trino_path }}/etc/"
+  become: true
+  loop:
+    - node.properties
+    - jvm.config
+    - log.properties
+    - config.properties
+  notify: Restart Trino
+- name: Create folder for trino connectors
+  ansible.builtin.file:
+    path: "{{ trino_path }}/etc/catalog"
+    state: directory
+  become: true
+- name: Pass the connector templates
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ trino_path }}/etc/catalog/{{ item }}"
+  become: true
+  loop:
+    - hive.properties
+  notify: Restart Trino

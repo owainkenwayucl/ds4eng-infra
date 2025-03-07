@@ -1,5 +1,21 @@
 ---
-- import_tasks: install-hadoop.yaml
-- import_tasks: hadoop-mgmt.yaml
-- import_tasks: hadoop-worker.yaml
-- import_tasks: hadoop-final.yaml
+- name: Install yum packages
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+  become: true
+  vars:
+    packages:
+      - java-1.8.0-openjdk-devel
+- name: Create folder for hadoop
+  ansible.builtin.file:
+    path: "{{ hadoop_install_path }}"
+    state: directory
+  become: true
+- name: Fetch the Hadoop distribution
+  ansible.builtin.unarchive:
+    src: https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+    dest: "{{ hadoop_install_path }}"
+    remote_src: true
+    creates: "{{ hadoop_path }}" # Idempotency
+  become: true
+  environment: "{{ hadoop_env }}"
