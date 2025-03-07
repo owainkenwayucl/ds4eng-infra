@@ -9,7 +9,7 @@
   become: true
 - name: Fetch the Hive distribution
   ansible.builtin.unarchive:
-    src: https://archive.apache.org/dist/hive/hive-4.0.1/apache-hive-4.0.1-bin.tar.gz
+    src: https://repo1.maven.org/maven2/org/apache/hive/hive-standalone-metastore/4.0.1/hive-standalone-metastore-4.0.1-bin.tar.gz
     dest: "{{ hive_install_path }}"
     remote_src: true
     creates: "{{ hive_path }}" # Idempotency
