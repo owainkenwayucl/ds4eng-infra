@@ -6,7 +6,6 @@
   vars:
     packages:
       - java-21-openjdk
-    stage: "'dev'"
 - name: Select the 21 java as system default
   # The other services will pick up JAVA 8 through their JAVA_HOME
   ansible.builtin.command: update-alternatives --set java java-21-openjdk.x86_64
