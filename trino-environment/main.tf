@@ -70,6 +70,18 @@ resource "harvester_virtualmachine" "vm" {
     auto_delete = true
   }
 
+  tags = {
+    condenser_ingress_isEnabled = true
+    condenser_ingress_os_hostname = "${var.username}-trinos3"
+    condenser_ingress_os_port = 9090
+    condenser_ingress_os_protocol = "https"
+    condenser_ingress_os_nginx_proxy-body-size = "100000m"
+    condenser_ingress_cons_hostname = "${var.username}-trinocons"
+    condenser_ingress_cons_port = 9091
+    condenser_ingress_cons_protocol = "https"
+    condenser_ingress_cons_nginx_proxy-body-size = "100000m"
+  }
+
   cloudinit {
     user_data_secret_name = harvester_cloudinit_secret.cloud-config.name
   }
