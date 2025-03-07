@@ -1,0 +1,12 @@
+Description=Hive Service
+
+[Service]
+ExecStart={{ hive_path }}/bin/start-metastore
+Type=simple 
+WorkingDirectory={{ hive_path }}
+Environment="METASTORE_HOME={{ hive_path }}"
+Environment="HADOOP_HOME={{ hadoop_path }}"
+Environment="JAVA_HOME=$(readlink -f /usr/bin/java | sed \"s:bin/java::\")"
+
+[Install]
+WantedBy=default.target

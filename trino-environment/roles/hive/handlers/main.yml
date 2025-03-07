@@ -1,0 +1,5 @@
+- name: Restart Hive
+  become: true
+  ansible.builtin.service:
+    name: hive
+    state: restarted
