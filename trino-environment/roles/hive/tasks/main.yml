@@ -21,7 +21,7 @@
   become: true
   notify:
     - Restart Hive
-    - Restart Trino
+#    - Restart Trino
 - name: Just force systemd to reread configs (2.4 and above)
   ansible.builtin.systemd_service:
     daemon_reload: true
