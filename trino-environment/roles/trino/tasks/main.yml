@@ -23,7 +23,7 @@
     creates: "{{ trino_path }}" # Idempotency
   become: true
 - name: Fix Trino python path (python -> python3)
-  ansible.builtin.shell: sed -i.bak 's|#!/usr/bin/env python|#!/usr/bin/env python3|g' launcher.py 
+  ansible.builtin.shell: "sed -i.bak 's|#!/usr/bin/env python|#!/usr/bin/env python3|g' {{ trino_path }}/bin/launcher.py "
   become: true
 - name: Pass the configuration templates
   ansible.builtin.template:
