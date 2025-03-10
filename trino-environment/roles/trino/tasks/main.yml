@@ -5,10 +5,10 @@
   become: true
   vars:
     packages:
-      - java-21-openjdk
-- name: Select the 21 java as system default
+      - java-latest-openjdk
+- name: Select the 23 java as system default
   # The other services will pick up JAVA 8 through their JAVA_HOME
-  ansible.builtin.command: update-alternatives --set java java-21-openjdk.x86_64
+  ansible.builtin.command: update-alternatives --set java java-latest-openjdk.x86_64
   become: true
 - name: Create folder for trino
   ansible.builtin.file:
@@ -17,13 +17,10 @@
   become: true
 - name: Fetch the trino distribution
   ansible.builtin.unarchive:
-    src: https://repo1.maven.org/maven2/io/trino/trino-server/440/trino-server-440.tar.gz
+    src: https://repo1.maven.org/maven2/io/trino/trino-server/472/trino-server-472.tar.gz
     dest: "{{ trino_install_path }}"
     remote_src: true
     creates: "{{ trino_path }}" # Idempotency
-  become: true
-- name: Fix Trino python path (python -> python3)
-  ansible.builtin.shell: "sed -i.bak 's|#!/usr/bin/env python|#!/usr/bin/python3|g' {{ trino_path }}/bin/launcher.py "
   become: true
 - name: Pass the configuration templates
   ansible.builtin.template:

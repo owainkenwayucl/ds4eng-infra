@@ -1,5 +1,5 @@
 {
-    "endpoint" : "{{ inventory_hostname }}",
+    "endpoint" : "https://{{lookup('ansible.builtin.file','./.miniohost')}}",
     "access_key" : "myminioadmin",
     "secret_key" : "{{lookup('ansible.builtin.file','./.miniopass')}}"
 }

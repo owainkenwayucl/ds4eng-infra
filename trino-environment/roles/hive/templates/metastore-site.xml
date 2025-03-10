@@ -62,5 +62,17 @@ likely need to add a number of new values. -->
     <name>fs.s3a.path.style.access</name>
     <value>true</value>
 </property>
+  <property>
+    <name>fs.s3a.access.key</name>
+    <value>myminioadmin</value>
+  </property>
+  <property>
+    <name>fs.s3a.secret.key</name>
+    <value>{{lookup('ansible.builtin.file','./.miniopass')}}</value>
+  </property>
+  <property>
+    <name>fs.s3a.endpoint</name>
+    <value>https://{{lookup('ansible.builtin.file','./.miniohost')}}</value>
+  </property>
 
 </configuration>
