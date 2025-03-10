@@ -6,12 +6,6 @@
   vars:
     packages:
       - java-21-openjdk
-- name: Create "python" sym-link # the trino scripts need a python binary to exist
-  ansible.builtin.file:
-    path: /usr/local/bin/python
-    src: /usr/bin/python3
-    state: link
-  become: true
 - name: Select the 21 java as system default
   # The other services will pick up JAVA 8 through their JAVA_HOME
   ansible.builtin.command: update-alternatives --set java java-21-openjdk.x86_64
@@ -27,6 +21,9 @@
     dest: "{{ trino_install_path }}"
     remote_src: true
     creates: "{{ trino_path }}" # Idempotency
+  become: true
+- name: Fix Trino python path (python -> python3)
+  ansible.builtin.shell: sed -i.bak 's|#!/usr/bin/env python|#!/usr/bin/env python3|g' launcher.py 
   become: true
 - name: Pass the configuration templates
   ansible.builtin.template:
