@@ -11,5 +11,5 @@ output s3_url {
 }
 
 output cons_url {
-  value = "${var.username}-trinos3.comp0235.condenser.arc.ucl.ac.uk"
+  value = "${var.username}-trinocons.comp0235.condenser.arc.ucl.ac.uk"
 }
