@@ -46,3 +46,9 @@
   loop:
     - hive.properties
   notify: Restart Trino
+- name: Put the CLI in /usr/local/bin
+  ansible.builtin.get_url:
+    url: https://repo1.maven.org/maven2/io/trino/trino-cli/472/trino-cli-472-executable.jar
+    mode: "0755"
+    dest: /usr/local/bin/trino-cli
+  become: true  
