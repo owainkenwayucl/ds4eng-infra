@@ -174,5 +174,5 @@
 - name: create json for reactions app
   ansible.builtin.template:
     src: templates/s3.json.j2
-    dest: /home/almalinux/.mc/config.json
+    dest: /home/almalinux/s3.json
     mode: "0600"
