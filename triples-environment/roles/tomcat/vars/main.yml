@@ -1,0 +1,2 @@
+tomcat_path: /usr/share/tomcat
+tomcat_webapps: "{{tomcat_path}}/webapps"
