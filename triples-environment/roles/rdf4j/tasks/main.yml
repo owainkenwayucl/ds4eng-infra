@@ -1,0 +1,36 @@
+- name: Create folder for RDF4J
+  ansible.builtin.file:
+    path: "{{rdf4j_install_path}}"
+    state: directory
+  become: true
+- name: Fetch the distribution
+  ansible.builtin.unarchive:
+    src: https://mirror.ibcp.fr/pub/eclipse/rdf4j/eclipse-rdf4j-4.3.10-sdk.zip
+    dest: "{{rdf4j_install_path}}"
+    remote_src: true
+    creates: "{{rdf4j_path}}" #Idempotency
+  become: true
+- name: Symlink the war files to the Tomcat server
+  # Deploys to http://ec2-18-171-157-64.eu-west-2.compute.amazonaws.com:8080/rdf4j-server
+  ansible.builtin.file:
+    src: "{{rdf4j_path}}/war/{{ item }}"
+    dest: "{{ tomcat_webapps }}/{{item}}"
+    state: link
+  become: true
+  notify: Restart Tomcat
+  loop:
+    - rdf4j-workbench.war
+    - rdf4j-server.war
+- name: Create reactions repository folder
+  ansible.builtin.file:
+    path: "{{ rdf4j_config_path }}/server/repositories/reactions/"
+    state: directory
+  become: true
+  become_user: tomcat
+- name: Configure reactions repository
+  ansible.builtin.template:
+    src: config.ttl
+    dest: "{{ rdf4j_config_path }}/server/repositories/reactions/config.ttl"
+  become: true
+  become_user: tomcat
+  notify: Restart Tomcat
