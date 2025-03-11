@@ -1,0 +1,4 @@
+- name: Reboot
+  reboot:
+  become: true
+  become_user: root

@@ -1,0 +1,6 @@
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: trino
+    use: systemd
+  become: true
+  become_user: root

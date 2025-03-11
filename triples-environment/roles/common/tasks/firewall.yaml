@@ -1,0 +1,17 @@
+- name: enable ufw
+  ansible.builtin.shell: "echo y | ufw enable"
+  become: true
+  become_user: root
+- name: allow traffic from cluster hosts
+  ansible.builtin.shell: "ufw allow from {{ item }}"
+  loop: "{{ query('inventory_hostnames', 'all')  }}"
+  become: true
+  become_user: root
+- name: allow all to minio s3 port
+  ansible.builtin.shell: "ufw allow 9090"
+  become: true
+  become_user: root
+- name: allow all to minio cos port
+  ansible.builtin.shell: "ufw allow 9091"
+  become: true
+  become_user: root

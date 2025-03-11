@@ -1,0 +1,22 @@
+- name: Install English localisation
+  ansible.builtin.dnf:
+    name:
+      - glibc-langpack-en
+    state: latest
+  become: true
+  become_user: root
+- name: Set en-GB localization
+  shell: "localectl set-locale en_GB.UTF-8"
+  become: true
+  become_user: root
+- name: Set time-zone
+  shell: "timedatectl set-timezone Europe/London"
+  become: true
+  become_user: root
+- name: Create "python" sym-link # the trino scripts need a python binary to exist
+  ansible.builtin.file:
+    path: /usr/local/bin/python
+    src: /usr/bin/python3
+    state: link
+  become: true
+  become_user: root

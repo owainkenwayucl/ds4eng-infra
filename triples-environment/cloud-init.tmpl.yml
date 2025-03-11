@@ -1,0 +1,7 @@
+#cloud-config
+bootcmd:
+  - [ dnf, config-manager, --set-enabled, crb ]
+  - [ dnf, install, -y, epel-release ]
+
+ssh_authorized_keys:
+  - ${public_key_openssh}
