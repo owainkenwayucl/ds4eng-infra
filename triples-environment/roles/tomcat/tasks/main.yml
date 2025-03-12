@@ -1,0 +1,8 @@
+- name: Install yum packages
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+  become: true
+  vars:
+    packages:
+      - java-1.8.0-openjdk-devel
+      - tomcat
