@@ -25,7 +25,7 @@ resource "harvester_virtualmachine" "vm" {
   
   count = var.vm_count
 
-  name                 = "${var.username}-trino-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
+  name                 = "${var.username}-triples-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   namespace            = var.namespace
   restart_after_update = true
 
@@ -38,7 +38,7 @@ resource "harvester_virtualmachine" "vm" {
   secure_boot = true
 
   run_strategy    = "RerunOnFailure"
-  hostname        = "${var.username}-trino-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
+  hostname        = "${var.username}-triples-${format("%02d", count.index + 1)}-${random_id.secret.hex}"
   reserved_memory = "100Mi"
   machine_type    = "q35"
 
@@ -68,18 +68,6 @@ resource "harvester_virtualmachine" "vm" {
     boot_order = 2
 
     auto_delete = true
-  }
-
-  tags = {
-    condenser_ingress_isEnabled = true
-    condenser_ingress_os_hostname = "${var.username}-trinos3"
-    condenser_ingress_os_port = 9090
-    condenser_ingress_os_protocol = "https"
-    condenser_ingress_os_nginx_proxy-body-size = "100000m"
-    condenser_ingress_cons_hostname = "${var.username}-trinocons"
-    condenser_ingress_cons_port = 9091
-    condenser_ingress_cons_protocol = "https"
-    condenser_ingress_cons_nginx_proxy-body-size = "100000m"
   }
 
   cloudinit {
