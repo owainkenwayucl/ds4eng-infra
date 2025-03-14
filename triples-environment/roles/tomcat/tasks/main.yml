@@ -6,3 +6,10 @@
     packages:
       - java-1.8.0-openjdk-devel
       - tomcat
+- name: Start tomcat
+  ansible.builtin.systemd_service:
+    name: tomcat
+    state: started
+    enabled: true
+  become: true
+  become_user: root
