@@ -7,11 +7,3 @@
   loop: "{{ query('inventory_hostnames', 'all')  }}"
   become: true
   become_user: root
-- name: allow all to minio s3 port
-  ansible.builtin.shell: "ufw allow 9090"
-  become: true
-  become_user: root
-- name: allow all to minio cos port
-  ansible.builtin.shell: "ufw allow 9091"
-  become: true
-  become_user: root
